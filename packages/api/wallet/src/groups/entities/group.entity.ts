@@ -10,6 +10,7 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 import { GroupMember } from "./group-member.entity";
+import { Payment } from "@/payments/entities/payment.entity";
 
 /**
  * グループを表すエンティティ
@@ -31,7 +32,7 @@ export class Group {
   /**
    * 作成者
    */
-  @ManyToOne(() => User, (user) => user.ownedGroups, {
+  @ManyToOne(() => User, {
     nullable: false,
   })
   createdBy: Relation<User>;
@@ -55,6 +56,12 @@ export class Group {
    */
   @OneToMany(() => GroupMember, (groupMember) => groupMember.group)
   members: Relation<GroupMember[]>;
+
+  /**
+   * 支払い一覧
+   */
+  @OneToMany(() => Payment, (payment) => payment.group)
+  payments: Relation<Payment[]>;
 
   /**
    * コンストラクタ

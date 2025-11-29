@@ -8,6 +8,7 @@ import { ENV } from "./constants";
 import { UsersModule } from "./users/users.module";
 import { CategoriesModule } from "./categories/categories.module";
 import { GroupsModule } from "./groups/groups.module";
+import { PaymentsModule } from "./payments/payments.module";
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { GroupsModule } from "./groups/groups.module";
     UsersModule,
     CategoriesModule,
     GroupsModule,
+    PaymentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

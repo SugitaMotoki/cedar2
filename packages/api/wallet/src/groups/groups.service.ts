@@ -26,7 +26,6 @@ export class GroupsService {
 
   /**
    * グループを作成するメソッド
-   * @param createGroupDto
    * @returns 作成したグループ
    */
   async createGroup({
@@ -68,6 +67,7 @@ export class GroupsService {
         members: {
           member: true,
         },
+        payments: true,
       },
     });
   }

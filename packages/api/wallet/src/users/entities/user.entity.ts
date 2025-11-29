@@ -1,5 +1,4 @@
 import { GroupMember } from "@/groups/entities/group-member.entity";
-import { Group } from "@/groups/entities/group.entity";
 import {
   type Relation,
   Column,
@@ -50,12 +49,6 @@ export class User {
    */
   @UpdateDateColumn()
   updatedAt: Date;
-
-  /**
-   * 自分が作成したグループ一覧
-   */
-  @OneToMany(() => Group, (group) => group.createdBy)
-  ownedGroups: Relation<Group[]>;
 
   /**
    * グループ一覧

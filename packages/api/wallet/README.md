@@ -51,7 +51,6 @@
   - totalAmount
   - isSettled
   - orderKey
-  - settledAt (nullable)
   - createdBy
   - createdAt
   - updatedAt

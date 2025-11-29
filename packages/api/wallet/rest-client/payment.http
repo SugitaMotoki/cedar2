@@ -1,0 +1,23 @@
+## 支払い
+
+### 全取得
+GET http://localhost:4000/payments
+
+### 一部取得
+GET http://localhost:4000/payments/1
+
+### 作成
+POST http://localhost:4000/payments
+Content-Type: application/json
+Accept: application/json
+
+{
+  "groupId": 1,
+  "title": "東急ストア",
+  "note": "メモ",
+  "paymentDate": "2025-12-01",
+  "amount": 1500,
+  "isIncome": false,
+  "categoryId": 2,
+  "userNoOfcreatedBy": 1
+}

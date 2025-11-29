@@ -1,4 +1,4 @@
-### ユーザ作成1
+### ユーザ1作成
 POST http://localhost:4000/users
 Content-Type: application/json
 Accept: application/json
@@ -8,7 +8,7 @@ Accept: application/json
   "password": "taro"
 }
 
-### ユーザ作成2
+### ユーザ2作成
 POST http://localhost:4000/users
 Content-Type: application/json
 Accept: application/json
@@ -18,7 +18,7 @@ Accept: application/json
   "password": "hanako"
 }
 
-### ユーザ作成3
+### ユーザ3作成
 POST http://localhost:4000/users
 Content-Type: application/json
 Accept: application/json
@@ -28,7 +28,7 @@ Accept: application/json
   "password": "ken"
 }
 
-### グループ作成1
+### グループ1作成
 POST http://localhost:4000/groups
 Content-Type: application/json
 Accept: application/json
@@ -38,7 +38,7 @@ Accept: application/json
   "userNo": 1
 }
 
-### グループ1メンバ追加1
+### グループ1メンバ1追加
 POST http://localhost:4000/groups/1/members
 Content-Type: application/json
 Accept: application/json
@@ -47,7 +47,7 @@ Accept: application/json
   "userNo": 2
 }
 
-### グループ作成2
+### グループ2作成
 POST http://localhost:4000/groups
 Content-Type: application/json
 Accept: application/json
@@ -57,7 +57,7 @@ Accept: application/json
   "userNo": 1
 }
 
-### グループ2メンバ追加1
+### グループ2メンバ2追加
 POST http://localhost:4000/groups/2/members
 Content-Type: application/json
 Accept: application/json
@@ -66,13 +66,43 @@ Accept: application/json
   "userNo": 2
 }
 
-### グループ2メンバ追加2（重複エラー）
+### グループ2メンバ1追加（重複エラー）
 POST http://localhost:4000/groups/2/members
 Content-Type: application/json
 Accept: application/json
 
 {
   "userNo": 1
+}
+
+### カテゴリ1追加
+POST http://localhost:4000/categories/
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "食費",
+  "parentId": null
+}
+
+### カテゴリ2追加
+POST http://localhost:4000/categories/
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "食材",
+  "parentId": 1
+}
+
+### カテゴリ3追加
+POST http://localhost:4000/categories/
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "外食",
+  "parentId": 1
 }
 
 ### グループ全取得
@@ -89,3 +119,9 @@ GET http://localhost:4000/groups/2
 
 ### グループ2メンバー取得
 GET http://localhost:4000/groups/2/members
+
+### カテゴリ全取得
+GET http://localhost:4000/categories
+
+### 全取得
+GET http://localhost:4000/payments
