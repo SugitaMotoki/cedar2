@@ -5,6 +5,7 @@ import { ConfigModule } from "@nestjs/config";
 import { join } from "path";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ENV } from "./constants";
+import { UsersModule } from "./users/users.module";
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { ENV } from "./constants";
       autoLoadEntities: true,
       synchronize: true, // TODO: 本番環境ではfalseにする
     }),
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
