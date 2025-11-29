@@ -7,9 +7,12 @@ import {
   CreateDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
+import { PaymentAllocation } from "./payment-allocation.entity";
+import { PaymentActual } from "./payment-actual.entity";
 
 /**
  * 支払いに関するエンティティ
@@ -97,6 +100,18 @@ export class Payment {
    */
   @UpdateDateColumn()
   updatedAt: Date;
+
+  /**
+   * 支払い割り当て
+   */
+  @OneToMany(() => PaymentAllocation, (allocation) => allocation.payment)
+  allocations: Relation<PaymentAllocation[]>;
+
+  /**
+   * 実際の支払い
+   */
+  @OneToMany(() => PaymentActual, (actual) => actual.payment)
+  actuals: Relation<PaymentActual[]>;
 
   /**
    * コンストラクタ

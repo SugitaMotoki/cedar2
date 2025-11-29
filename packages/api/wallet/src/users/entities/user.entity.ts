@@ -1,4 +1,6 @@
 import { GroupMember } from "@/groups/entities/group-member.entity";
+import { PaymentActual } from "@/payments/entities/payment-actual.entity";
+import { PaymentAllocation } from "@/payments/entities/payment-allocation.entity";
 import {
   type Relation,
   Column,
@@ -55,6 +57,18 @@ export class User {
    */
   @OneToMany(() => GroupMember, (groupMember) => groupMember.member)
   groups: Relation<GroupMember[]>;
+
+  /**
+   * 支払い割り当て
+   */
+  @OneToMany(() => PaymentAllocation, (allocation) => allocation.user)
+  allocations: Relation<PaymentAllocation[]>;
+
+  /**
+   * 実際の支払い
+   */
+  @OneToMany(() => PaymentActual, (actual) => actual.user)
+  actuals: Relation<PaymentActual[]>;
 
   /**
    * コンストラクタ

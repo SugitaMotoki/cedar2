@@ -7,6 +7,8 @@ import { Repository } from "typeorm";
 import { Group } from "@/groups/entities/group.entity";
 import { Category } from "@/categories/entities/category.entity";
 import { User } from "@/users/entities/user.entity";
+import { PaymentAllocation } from "./entities/payment-allocation.entity";
+import { PaymentActual } from "./entities/payment-actual.entity";
 
 /**
  * 支払いに関するサービス
@@ -20,6 +22,10 @@ export class PaymentsService {
   constructor(
     @InjectRepository(Payment)
     private readonly paymentsRepository: Repository<Payment>,
+    @InjectRepository(PaymentAllocation)
+    private readonly paymentAllocationsRepository: Repository<PaymentAllocation>,
+    @InjectRepository(PaymentActual)
+    private readonly paymentActualsRepository: Repository<PaymentActual>,
   ) {}
 
   /**
@@ -75,6 +81,14 @@ export class PaymentsService {
       where: {
         id,
       },
+      relations: {
+        allocations: {
+          user: true,
+        },
+        actuals: {
+          user: true,
+        },
+      },
     });
   }
 
@@ -97,6 +111,95 @@ export class PaymentsService {
    */
   async removePayment(id: number) {
     const deleteResult = await this.paymentsRepository.delete(id);
+    return deleteResult;
+  }
+
+  /**
+   * 支払い割り当てを追加するメソッド
+   * @param paymentId 支払いID
+   * @param userNo ユーザの通し番号
+   * @param amount 金額
+   * @returns 追加した支払い割り当て
+   */
+  async addAllocationToPayment(
+    paymentId: number,
+    userNo: number,
+    amount: number,
+  ): Promise<Readonly<PaymentAllocation>> {
+    const allocation = new PaymentAllocation({
+      payment: new Payment({ id: paymentId }),
+      user: new User({ no: userNo }),
+      amount,
+    });
+    await this.paymentAllocationsRepository.save(allocation);
+    return allocation;
+  }
+
+  /**
+   * 支払い割り当ての金額を更新するメソッド
+   * @param id
+   * @param amount
+   * @returns 更新結果
+   */
+  async updatePaymentAllocation(id: number, amount: number) {
+    const allocation = new PaymentAllocation({ amount });
+    const updateResult = await this.paymentAllocationsRepository.update(
+      id,
+      allocation,
+    );
+    return updateResult;
+  }
+
+  /**
+   * 支払い割り当てを削除するメソッド
+   * @param id
+   * @returns 削除結果
+   */
+  async removePaymentAllocation(id: number) {
+    const deleteResult = await this.paymentAllocationsRepository.delete(id);
+    return deleteResult;
+  }
+
+  /**
+   * 実際の支払いを追加するメソッド
+   * @param paymentId 支払いID
+   * @param userNo ユーザの通し番号
+   * @param amount 金額
+   * @returns 追加した実際の支払い
+   */
+  async addActualToPayment(
+    paymentId: number,
+    userNo: number,
+    amount: number,
+  ): Promise<Readonly<PaymentActual>> {
+    const actual = new PaymentActual({
+      payment: new Payment({ id: paymentId }),
+      user: new User({ no: userNo }),
+      amount,
+    });
+    await this.paymentActualsRepository.save(actual);
+    return actual;
+  }
+
+  /**
+   * 実際の支払いの金額を更新するメソッド
+   * @param id
+   * @param amount
+   * @returns 更新結果
+   */
+  async updatePaymentActual(id: number, amount: number) {
+    const actual = new PaymentActual({ amount });
+    const updateResult = await this.paymentActualsRepository.update(id, actual);
+    return updateResult;
+  }
+
+  /**
+   * 実際の支払いを削除するメソッド
+   * @param id
+   * @returns 削除結果
+   */
+  async removePaymentActual(id: number) {
+    const deleteResult = await this.paymentActualsRepository.delete(id);
     return deleteResult;
   }
 }
