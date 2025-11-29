@@ -1,3 +1,4 @@
+import { GroupMember } from "@/groups/entities/group-member.entity";
 import { Group } from "@/groups/entities/group.entity";
 import {
   type Relation,
@@ -55,6 +56,12 @@ export class User {
    */
   @OneToMany(() => Group, (group) => group.createdBy)
   ownedGroups: Relation<Group[]>;
+
+  /**
+   * グループ一覧
+   */
+  @OneToMany(() => GroupMember, (groupMember) => groupMember.member)
+  groups: Relation<GroupMember[]>;
 
   /**
    * コンストラクタ

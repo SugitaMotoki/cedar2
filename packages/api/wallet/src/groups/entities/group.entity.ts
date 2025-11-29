@@ -5,9 +5,11 @@ import {
   CreateDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
+import { GroupMember } from "./group-member.entity";
 
 /**
  * グループを表すエンティティ
@@ -47,6 +49,12 @@ export class Group {
    */
   @UpdateDateColumn()
   updatedAt: Date;
+
+  /**
+   * メンバ一覧
+   */
+  @OneToMany(() => GroupMember, (groupMember) => groupMember.group)
+  members: Relation<GroupMember[]>;
 
   /**
    * コンストラクタ

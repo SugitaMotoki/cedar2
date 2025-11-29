@@ -1,0 +1,91 @@
+### ユーザ作成1
+POST http://localhost:4000/users
+Content-Type: application/json
+Accept: application/json
+
+{
+  "id": "太郎",
+  "password": "taro"
+}
+
+### ユーザ作成2
+POST http://localhost:4000/users
+Content-Type: application/json
+Accept: application/json
+
+{
+  "id": "花子",
+  "password": "hanako"
+}
+
+### ユーザ作成3
+POST http://localhost:4000/users
+Content-Type: application/json
+Accept: application/json
+
+{
+  "id": "健",
+  "password": "ken"
+}
+
+### グループ作成1
+POST http://localhost:4000/groups
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "神奈川県民",
+  "userNo": 1
+}
+
+### グループ1メンバ追加1
+POST http://localhost:4000/groups/1/members
+Content-Type: application/json
+Accept: application/json
+
+{
+  "userNo": 2
+}
+
+### グループ作成2
+POST http://localhost:4000/groups
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "ゴルフ部",
+  "userNo": 1
+}
+
+### グループ2メンバ追加1
+POST http://localhost:4000/groups/2/members
+Content-Type: application/json
+Accept: application/json
+
+{
+  "userNo": 2
+}
+
+### グループ2メンバ追加2（重複エラー）
+POST http://localhost:4000/groups/2/members
+Content-Type: application/json
+Accept: application/json
+
+{
+  "userNo": 1
+}
+
+### グループ全取得
+GET http://localhost:4000/groups
+
+### グループ1取得
+GET http://localhost:4000/groups/1
+
+### グループ1メンバー取得
+GET http://localhost:4000/groups/1/members
+
+### グループ2取得
+GET http://localhost:4000/groups/2
+
+### グループ2メンバー取得
+GET http://localhost:4000/groups/2/members

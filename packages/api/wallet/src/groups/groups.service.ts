@@ -5,6 +5,8 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Group } from "./entities/group.entity";
 import { Repository } from "typeorm";
 import { UsersService } from "@/users/users.service";
+import { GroupMember } from "./entities/group-member.entity";
+import { User } from "@/users/entities/user.entity";
 
 /**
  * グループに関するサービス
@@ -19,6 +21,8 @@ export class GroupsService {
   constructor(
     @InjectRepository(Group)
     private readonly groupsRepository: Repository<Group>,
+    @InjectRepository(GroupMember)
+    private readonly groupMembersRepository: Repository<GroupMember>,
     private readonly usersService: UsersService,
   ) {}
 
@@ -27,7 +31,7 @@ export class GroupsService {
    * @param createGroupDto
    * @returns 作成したグループ
    */
-  async create(createGroupDto: CreateGroupDto): Promise<Readonly<Group>> {
+  async createGroup(createGroupDto: CreateGroupDto): Promise<Readonly<Group>> {
     const createdBy = await this.usersService.findByNoOrThrow(
       createGroupDto.userNo,
     );
@@ -36,6 +40,7 @@ export class GroupsService {
       createdBy,
     });
     await this.groupsRepository.save(group);
+    await this.addMemberToGroup(group.id, group.createdBy.no);
     return group;
   }
 
@@ -43,7 +48,7 @@ export class GroupsService {
    * 全てのグループを取得するメソッド
    * @returns 全てのグループ
    */
-  findAll(): Promise<Readonly<Group[]>> {
+  findAllGroups(): Promise<Readonly<Group[]>> {
     return this.groupsRepository.find({
       order: {
         createdAt: "ASC",
@@ -56,10 +61,15 @@ export class GroupsService {
    * @param id ID
    * @returns 指定されたIDのグループ（なければエラー）
    */
-  findByIdOrThrow(id: number): Promise<Readonly<Group>> {
+  findGroupByIdOrThrow(id: number): Promise<Readonly<Group>> {
     return this.groupsRepository.findOneOrFail({
       where: {
         id,
+      },
+      relations: {
+        members: {
+          member: true,
+        },
       },
     });
   }
@@ -70,7 +80,7 @@ export class GroupsService {
    * @param updateGroupDto
    * @returns 更新結果
    */
-  async update(id: number, updateGroupDto: UpdateGroupDto) {
+  async updateGroup(id: number, updateGroupDto: UpdateGroupDto) {
     const group = new Group({ ...updateGroupDto });
     const updateResult = await this.groupsRepository.update(id, group);
     return updateResult;
@@ -81,8 +91,38 @@ export class GroupsService {
    * @param id ID
    * @returns 削除結果
    */
-  async remove(id: number) {
+  async removeGroup(id: number) {
     const deleteResult = await this.groupsRepository.delete(id);
     return deleteResult;
+  }
+
+  /**
+   * グループにメンバを追加するメソッド
+   * @param groupId グループID
+   * @param userNo ユーザの通し番号
+   * @returns 追加したグループメンバ
+   */
+  async addMemberToGroup(groupId: number, userNo: number) {
+    const groupMember = new GroupMember({
+      group: new Group({ id: groupId }),
+      member: new User({ no: userNo }),
+    });
+    await this.groupMembersRepository.save(groupMember);
+    return groupMember;
+  }
+
+  /**
+   * グループの全てのメンバ一覧を取得するメソッド
+   * @returns 全てのグループ
+   */
+  findAllMembersByGroupId(groupId: number): Promise<Readonly<GroupMember[]>> {
+    return this.groupMembersRepository.find({
+      where: {
+        group: new Group({ id: groupId }),
+      },
+      relations: {
+        member: true,
+      },
+    });
   }
 }

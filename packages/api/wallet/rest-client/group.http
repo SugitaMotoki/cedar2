@@ -6,12 +6,26 @@ GET http://localhost:4000/groups
 ### 一部取得
 GET http://localhost:4000/groups/1
 
-### 追加
+### グループ追加
 POST http://localhost:4000/groups
 Content-Type: application/json
 Accept: application/json
 
 {
   "name": "グループ",
+  "userNo": 1
+}
+
+## メンバ
+
+### 全取得
+GET http://localhost:4000/groups/1/members
+
+### 追加
+POST http://localhost:4000/groups/1/members
+Content-Type: application/json
+Accept: application/json
+
+{
   "userNo": 1
 }
