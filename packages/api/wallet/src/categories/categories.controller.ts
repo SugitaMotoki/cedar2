@@ -34,8 +34,8 @@ export class CategoriesController {
   }
 
   @Get(":id")
-  findOne(@Param("id") id: string) {
-    return this.categoriesService.findByIdOrNull(+id); // TODO: 型チェック
+  findByIdOrThrow(@Param("id") id: string) {
+    return this.categoriesService.findByIdOrThrow(+id); // TODO: 型チェック
   }
 
   @Patch(":id")

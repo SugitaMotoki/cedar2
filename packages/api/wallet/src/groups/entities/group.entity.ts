@@ -1,40 +1,38 @@
-import { Group } from "@/groups/entities/group.entity";
+import { User } from "@/users/entities/user.entity";
 import {
   type Relation,
   Column,
   CreateDateColumn,
   Entity,
-  OneToMany,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
 
 /**
- * ユーザを表すエンティティ
+ * グループを表すエンティティ
  */
 @Entity()
-export class User {
-  /**
-   * 通し番号
-   */
-  @PrimaryGeneratedColumn()
-  no: number;
-
+export class Group {
   /**
    * ID
    */
-  @Column({
-    unique: true,
-  })
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   /**
-   * パスワード
+   * 名前
    */
-  @Column({
-    select: false,
+  @Column()
+  name: string;
+
+  /**
+   * 作成者
+   */
+  @ManyToOne(() => User, (user) => user.ownedGroups, {
+    nullable: false,
   })
-  password: string;
+  createdBy: Relation<User>;
 
   /**
    * 作成日
@@ -51,16 +49,10 @@ export class User {
   updatedAt: Date;
 
   /**
-   * 自分が作成したグループ一覧
-   */
-  @OneToMany(() => Group, (group) => group.createdBy)
-  ownedGroups: Relation<Group[]>;
-
-  /**
    * コンストラクタ
    * @param partial 部分型
    */
-  constructor(partial?: Partial<User>) {
+  constructor(partial?: Partial<Group>) {
     Object.assign(this, partial);
   }
 }

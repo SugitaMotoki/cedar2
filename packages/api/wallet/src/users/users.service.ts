@@ -29,6 +29,7 @@ export class UsersService {
   async create(createUserDto: CreateUserDto): Promise<Readonly<User>> {
     const user = new User({ ...createUserDto });
     await this.usersRepository.save(user);
+    user.password = "The password has been hidden.";
     return user;
   }
 
@@ -47,10 +48,10 @@ export class UsersService {
   /**
    * 指定された通し番号のユーザを取得するメソッド
    * @param no 通し番号
-   * @returns 指定された通し番号のユーザ（なければnull）
+   * @returns 指定された通し番号のユーザ（なければエラー）
    */
-  findByNoOrNull(no: number): Promise<Readonly<User> | null> {
-    return this.usersRepository.findOne({
+  findByNoOrThrow(no: number): Promise<Readonly<User>> {
+    return this.usersRepository.findOneOrFail({
       where: {
         no,
       },
@@ -60,10 +61,10 @@ export class UsersService {
   /**
    * 指定されたIDのユーザを取得するメソッド
    * @param id ID
-   * @returns 指定されたIDのユーザ（なければnull）
+   * @returns 指定されたIDのユーザ（なければエラー）
    */
-  findByIdOrNull(id: string): Promise<Readonly<User> | null> {
-    return this.usersRepository.findOne({
+  findByIdOrThrow(id: string): Promise<Readonly<User>> {
+    return this.usersRepository.findOneOrFail({
       where: {
         id,
       },

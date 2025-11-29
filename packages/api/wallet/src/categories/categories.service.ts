@@ -60,19 +60,6 @@ export class CategoriesService {
   /**
    * 指定されたIDのカテゴリを取得するメソッド
    * @param id ID
-   * @returns 指定されたIDのカテゴリ（なければnull）
-   */
-  findByIdOrNull(id: number): Promise<Readonly<Category> | null> {
-    return this.categoriesRepository.findOne({
-      where: {
-        id,
-      },
-    });
-  }
-
-  /**
-   * 指定されたIDのカテゴリを取得するメソッド
-   * @param id ID
    * @returns 指定されたIDのカテゴリ（なければエラー）
    */
   findByIdOrThrow(id: number): Promise<Readonly<Category>> {

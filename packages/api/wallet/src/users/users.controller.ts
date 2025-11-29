@@ -33,13 +33,13 @@ export class UsersController {
   }
 
   @Get(":no")
-  findByNoOrNull(@Param("no") no: string) {
-    return this.usersService.findByNoOrNull(+no); // TODO: 型チェック
+  findByNoOrThrow(@Param("no") no: string) {
+    return this.usersService.findByNoOrThrow(+no); // TODO: 型チェック
   }
 
   @Get(":id")
-  findByIdOrNull(@Param("id") id: string) {
-    return this.usersService.findByIdOrNull(id);
+  findByIdOrThrow(@Param("id") id: string) {
+    return this.usersService.findByIdOrThrow(id);
   }
 
   @Patch(":no")

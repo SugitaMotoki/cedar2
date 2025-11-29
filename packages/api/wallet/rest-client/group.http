@@ -1,0 +1,17 @@
+## グループ
+
+### 全取得
+GET http://localhost:4000/groups
+
+### 一部取得
+GET http://localhost:4000/groups/1
+
+### 追加
+POST http://localhost:4000/groups
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "グループ",
+  "userNo": 1
+}
