@@ -4,7 +4,6 @@ import { UpdateGroupDto } from "./dto/update-group.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Group } from "./entities/group.entity";
 import { Repository } from "typeorm";
-import { UsersService } from "@/users/users.service";
 import { GroupMember } from "./entities/group-member.entity";
 import { User } from "@/users/entities/user.entity";
 
@@ -23,7 +22,6 @@ export class GroupsService {
     private readonly groupsRepository: Repository<Group>,
     @InjectRepository(GroupMember)
     private readonly groupMembersRepository: Repository<GroupMember>,
-    private readonly usersService: UsersService,
   ) {}
 
   /**
@@ -31,13 +29,13 @@ export class GroupsService {
    * @param createGroupDto
    * @returns 作成したグループ
    */
-  async createGroup(createGroupDto: CreateGroupDto): Promise<Readonly<Group>> {
-    const createdBy = await this.usersService.findByNoOrThrow(
-      createGroupDto.userNo,
-    );
+  async createGroup({
+    name,
+    userNo,
+  }: CreateGroupDto): Promise<Readonly<Group>> {
     const group = new Group({
-      name: createGroupDto.name,
-      createdBy,
+      name,
+      createdBy: new User({ no: userNo }),
     });
     await this.groupsRepository.save(group);
     await this.addMemberToGroup(group.id, group.createdBy.no);

@@ -24,15 +24,14 @@ export class CategoriesService {
    * @param createCategoryDto
    * @returns 作成したカテゴリ
    */
-  async create(
-    createCategoryDto: CreateCategoryDto,
-  ): Promise<Readonly<Category>> {
+  async create({
+    name,
+    parentId,
+  }: CreateCategoryDto): Promise<Readonly<Category>> {
     const category = new Category({
-      name: createCategoryDto.name,
+      name,
+      parent: parentId !== null ? new Category({ id: parentId }) : undefined,
     });
-    if (createCategoryDto.parentId !== null) {
-      category.parent = await this.findByIdOrThrow(createCategoryDto.parentId);
-    }
     await this.categoriesRepository.save(category);
     return category;
   }
