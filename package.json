@@ -1,0 +1,26 @@
+{
+  "name": "cedar2",
+  "version": "2.0.0",
+  "description": "杉の木システム",
+  "main": "index.js",
+  "scripts": {
+    "api:wallet": "pnpm -F '@cedar2/wallet'",
+    "type-check": "turbo type-check",
+    "lint": "turbo lint",
+    "format": "turbo format",
+    "build": "turbo build",
+    "dev": "turbo dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.24.0",
+  "engines": {
+    "pnpm": ">=10.24.0",
+    "npm": "Use pnpm!",
+    "yarn": "Use pnpm!"
+  },
+  "devDependencies": {
+    "turbo": "^2.6.1"
+  }
+}
