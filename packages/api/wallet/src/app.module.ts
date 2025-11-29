@@ -6,6 +6,7 @@ import { join } from "path";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ENV } from "./constants";
 import { UsersModule } from "./users/users.module";
+import { CategoriesModule } from "./categories/categories.module";
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { UsersModule } from "./users/users.module";
       synchronize: true, // TODO: 本番環境ではfalseにする
     }),
     UsersModule,
+    CategoriesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

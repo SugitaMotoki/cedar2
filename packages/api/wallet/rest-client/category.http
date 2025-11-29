@@ -1,0 +1,59 @@
+## カテゴリ
+
+### 全取得
+GET http://localhost:4000/categories
+
+### 一部取得
+GET http://localhost:4000/categories/3
+
+### 追加
+
+#### 食費
+POST http://localhost:4000/categories/
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "食費",
+  "parentId": null
+}
+
+#### 食材
+POST http://localhost:4000/categories/
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "食材",
+  "parentId": 1
+}
+
+#### イオン
+POST http://localhost:4000/categories/
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "イオン",
+  "parentId": 2
+}
+
+#### 外食
+POST http://localhost:4000/categories/
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "外食",
+  "parentId": 1
+}
+
+#### パン
+POST http://localhost:4000/categories/
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "パン",
+  "parentId": 4
+}

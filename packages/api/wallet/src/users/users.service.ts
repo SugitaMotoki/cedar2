@@ -4,6 +4,8 @@ import { UpdateUserDto } from "./dto/update-user.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { User } from "./entities/user.entity";
 import { Repository } from "typeorm";
+import { UpdateResult } from "typeorm/browser";
+import { DeleteResult } from "typeorm/browser";
 
 /**
  * ユーザに関するサービス
@@ -47,7 +49,7 @@ export class UsersService {
    * @param no 通し番号
    * @returns 指定された通し番号のユーザ（なければnull）
    */
-  findByNoOrNull(no: number) {
+  findByNoOrNull(no: number): Promise<Readonly<User> | null> {
     return this.usersRepository.findOne({
       where: {
         no,
@@ -60,7 +62,7 @@ export class UsersService {
    * @param id ID
    * @returns 指定されたIDのユーザ（なければnull）
    */
-  findByIdOrNull(id: string) {
+  findByIdOrNull(id: string): Promise<Readonly<User> | null> {
     return this.usersRepository.findOne({
       where: {
         id,
@@ -74,7 +76,10 @@ export class UsersService {
    * @param updateUserDto
    * @returns 更新結果
    */
-  async update(no: number, updateUserDto: UpdateUserDto) {
+  async update(
+    no: number,
+    updateUserDto: UpdateUserDto,
+  ): Promise<Readonly<UpdateResult>> {
     const user = new User({ ...updateUserDto });
     const updateResult = await this.usersRepository.update(no, user);
     return updateResult;
@@ -85,7 +90,7 @@ export class UsersService {
    * @param no 通し番号
    * @returns 削除結果
    */
-  async remove(no: number) {
+  async remove(no: number): Promise<Readonly<DeleteResult>> {
     const deleteResult = await this.usersRepository.delete(no);
     return deleteResult;
   }
