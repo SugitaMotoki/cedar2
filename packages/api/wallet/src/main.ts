@@ -1,6 +1,7 @@
 import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
 import { NestExpressApplication } from "@nestjs/platform-express";
+import { ENV } from "./constants";
 
 /**
  * 環境変数を取得する関数
@@ -21,16 +22,16 @@ const getEnv = (key: string): string => {
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
-  const HOST_NAME: string = getEnv("HOSTNAME");
+  const HOST_NAME: string = getEnv(ENV.COMMON.HOSTNAME);
   const PORT = {
-    WALLET: getEnv("WALLET_PORT"),
-    CEDAR_PORTAL: getEnv("CEDAR_PORTAL_PORT"),
+    WALLET: getEnv(ENV.WALLET.PORT),
+    PORTAL: getEnv(ENV.PORTAL.PORT),
   } as const;
 
   app.enableCors({
     origin: [
-      `http://${HOST_NAME}:${PORT.CEDAR_PORTAL}`,
-      `https://${HOST_NAME}:${PORT.CEDAR_PORTAL}`,
+      `http://${HOST_NAME}:${PORT.PORTAL}`,
+      `https://${HOST_NAME}:${PORT.PORTAL}`,
     ],
   });
 
