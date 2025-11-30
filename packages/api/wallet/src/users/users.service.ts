@@ -46,6 +46,23 @@ export class UsersService {
   }
 
   /**
+   * 指定されたグループに所属するユーザを取得するメソッド
+   * @param groupId グループID
+   * @returns 指定されたグループに所属するユーザ
+   */
+  findByGroupIdOrThrow(groupId: number): Promise<Readonly<User[]>> {
+    return this.usersRepository.find({
+      where: {
+        groups: {
+          group: {
+            id: groupId,
+          },
+        },
+      },
+    });
+  }
+
+  /**
    * 指定された通し番号のユーザを取得するメソッド
    * @param no 通し番号
    * @returns 指定された通し番号のユーザ（なければエラー）

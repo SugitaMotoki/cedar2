@@ -15,9 +15,54 @@ Accept: application/json
   "groupId": 1,
   "title": "東急ストア",
   "note": "メモ",
-  "paymentDate": "2025-12-01",
-  "amount": 1500,
+  "paymentDate": "2025-12-03",
+  "amount": 4000,
   "isIncome": false,
   "categoryId": 2,
-  "userNoOfcreatedBy": 1
+  "userNoOfcreatedBy": 1,
+  "allocations": [
+    { "userNo": 1, "amount": 2000 },
+    { "userNo": 2, "amount": 2000 }
+  ],
+  "actuals": [
+    { "userNo": 1, "amount": 0 },
+    { "userNo": 2, "amount": 4000 }
+  ]
 }
+
+### 支払い割り当て1更新
+PATCH  http://localhost:4000/payments/1/allocations/1
+Content-Type: application/json
+Accept: application/json
+
+{
+  "amount": 1000
+}
+
+### 支払い割り当て2更新
+PATCH  http://localhost:4000/payments/1/allocations/2
+Content-Type: application/json
+Accept: application/json
+
+{
+  "amount": 1000
+}
+
+### 実際の支払い1更新
+PATCH  http://localhost:4000/payments/1/actuals/1
+Content-Type: application/json
+Accept: application/json
+
+{
+  "amount": 2000
+}
+
+### 実際の支払い2更新
+PATCH  http://localhost:4000/payments/1/actuals/2
+Content-Type: application/json
+Accept: application/json
+
+{
+  "amount": 0
+}
+

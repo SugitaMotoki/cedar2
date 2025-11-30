@@ -18,6 +18,8 @@ export class PaymentsService {
   /**
    * コンストラクタ
    * @param paymentsRepository
+   * @param paymentAllocationsRepository
+   * @param paymentActualsRepository
    */
   constructor(
     @InjectRepository(Payment)
@@ -41,6 +43,8 @@ export class PaymentsService {
     isIncome,
     categoryId,
     userNoOfcreatedBy,
+    allocations,
+    actuals,
   }: CreatePaymentDto): Promise<Readonly<Payment>> {
     const payment = new Payment({
       group: new Group({ id: groupId }),
@@ -55,6 +59,20 @@ export class PaymentsService {
       createdBy: new User({ no: userNoOfcreatedBy }),
     });
     await this.paymentsRepository.save(payment);
+
+    // 支払い割り当て
+    for (const allocation of allocations) {
+      await this.addAllocationToPayment(
+        payment.id,
+        allocation.userNo,
+        allocation.amount,
+      );
+    }
+    // 実際の支払い
+    for (const actual of actuals) {
+      await this.addActualToPayment(payment.id, actual.userNo, actual.amount);
+    }
+
     return payment;
   }
 

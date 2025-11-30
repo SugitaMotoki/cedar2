@@ -66,15 +66,6 @@ Accept: application/json
   "userNo": 2
 }
 
-### グループ2メンバ1追加（重複エラー）
-POST http://localhost:4000/groups/2/members
-Content-Type: application/json
-Accept: application/json
-
-{
-  "userNo": 1
-}
-
 ### カテゴリ1追加
 POST http://localhost:4000/categories/
 Content-Type: application/json
@@ -118,47 +109,15 @@ Accept: application/json
   "amount": 2000,
   "isIncome": false,
   "categoryId": 2,
-  "userNoOfcreatedBy": 1
-}
-
-### 支払い1割り当て1作成
-POST http://localhost:4000/payments/1/allocations
-Content-Type: application/json
-Accept: application/json
-
-{
-  "userNo": 1,
-  "amount": 1000
-}
-
-### 支払い1割り当て2作成
-POST http://localhost:4000/payments/1/allocations
-Content-Type: application/json
-Accept: application/json
-
-{
-  "userNo": 2,
-  "amount": 1000
-}
-
-### 支払い1実際1作成
-POST http://localhost:4000/payments/1/actuals
-Content-Type: application/json
-Accept: application/json
-
-{
-  "userNo": 1,
-  "amount": 2000
-}
-
-### 支払い1実際2作成
-POST http://localhost:4000/payments/1/actuals
-Content-Type: application/json
-Accept: application/json
-
-{
-  "userNo": 2,
-  "amount": 0
+  "userNoOfcreatedBy": 1,
+  "allocations": [
+    { "userNo": 1, "amount": 1000 },
+    { "userNo": 2, "amount": 1000 }
+  ],
+  "actuals": [
+    { "userNo": 1, "amount": 1000 },
+    { "userNo": 2, "amount": 0 }
+  ]
 }
 
 ### グループ全取得

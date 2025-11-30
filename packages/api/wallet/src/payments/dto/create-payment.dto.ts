@@ -1,3 +1,6 @@
+import { AddActualDto } from "./add-actual.dto";
+import { AddAllocationDto } from "./add-allocation.dto";
+
 /**
  * 支払い作成用DTO
  */
@@ -41,4 +44,14 @@ export class CreatePaymentDto {
    * 作成者
    */
   userNoOfcreatedBy: number;
+
+  /**
+   * 支払い割り当て一覧
+   */
+  allocations: AddAllocationDto[];
+
+  /**
+   * 支払い割り当て一覧
+   */
+  actuals: AddActualDto[];
 }
