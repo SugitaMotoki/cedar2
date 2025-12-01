@@ -94,13 +94,12 @@ export class UsersService {
    * @param updateUserDto
    * @returns 更新結果
    */
-  async update(
+  update(
     no: number,
     updateUserDto: UpdateUserDto,
   ): Promise<Readonly<UpdateResult>> {
     const user = new User({ ...updateUserDto });
-    const updateResult = await this.usersRepository.update(no, user);
-    return updateResult;
+    return this.usersRepository.update(no, user);
   }
 
   /**
@@ -108,8 +107,7 @@ export class UsersService {
    * @param no 通し番号
    * @returns 削除結果
    */
-  async remove(no: number): Promise<Readonly<DeleteResult>> {
-    const deleteResult = await this.usersRepository.delete(no);
-    return deleteResult;
+  remove(no: number): Promise<Readonly<DeleteResult>> {
+    return this.usersRepository.delete(no);
   }
 }

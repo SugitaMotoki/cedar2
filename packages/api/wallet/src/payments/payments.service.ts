@@ -112,10 +112,9 @@ export class PaymentsService {
    * @param updatePaymentDto
    * @returns 更新結果
    */
-  async updatePayment(id: number, updatePaymentDto: UpdatePaymentDto) {
+  updatePayment(id: number, updatePaymentDto: UpdatePaymentDto) {
     const payment = new Payment({ ...updatePaymentDto });
-    const updateResult = await this.paymentsRepository.update(id, payment);
-    return updateResult;
+    return this.paymentsRepository.update(id, payment);
   }
 
   /**
@@ -134,9 +133,8 @@ export class PaymentsService {
    * @param id
    * @returns 削除結果
    */
-  async removePayment(id: number) {
-    const deleteResult = await this.paymentsRepository.delete(id);
-    return deleteResult;
+  removePayment(id: number) {
+    return this.paymentsRepository.delete(id);
   }
 
   /**
@@ -166,13 +164,9 @@ export class PaymentsService {
    * @param amount
    * @returns 更新結果
    */
-  async updatePaymentAllocation(id: number, amount: number) {
+  updatePaymentAllocation(id: number, amount: number) {
     const allocation = new PaymentAllocation({ amount });
-    const updateResult = await this.paymentAllocationsRepository.update(
-      id,
-      allocation,
-    );
-    return updateResult;
+    return this.paymentAllocationsRepository.update(id, allocation);
   }
 
   /**
@@ -180,9 +174,8 @@ export class PaymentsService {
    * @param id
    * @returns 削除結果
    */
-  async removePaymentAllocation(id: number) {
-    const deleteResult = await this.paymentAllocationsRepository.delete(id);
-    return deleteResult;
+  removePaymentAllocation(id: number) {
+    return this.paymentAllocationsRepository.delete(id);
   }
 
   /**
@@ -212,10 +205,9 @@ export class PaymentsService {
    * @param amount
    * @returns 更新結果
    */
-  async updatePaymentActual(id: number, amount: number) {
+  updatePaymentActual(id: number, amount: number) {
     const actual = new PaymentActual({ amount });
-    const updateResult = await this.paymentActualsRepository.update(id, actual);
-    return updateResult;
+    return this.paymentActualsRepository.update(id, actual);
   }
 
   /**
@@ -223,8 +215,7 @@ export class PaymentsService {
    * @param id
    * @returns 削除結果
    */
-  async removePaymentActual(id: number) {
-    const deleteResult = await this.paymentActualsRepository.delete(id);
-    return deleteResult;
+  removePaymentActual(id: number) {
+    return this.paymentActualsRepository.delete(id);
   }
 }

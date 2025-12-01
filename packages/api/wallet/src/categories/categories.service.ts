@@ -75,10 +75,9 @@ export class CategoriesService {
    * @param updateCategoryDto
    * @returns 更新結果
    */
-  async update(id: number, updateCategoryDto: UpdateCategoryDto) {
+  update(id: number, updateCategoryDto: UpdateCategoryDto) {
     const category = new Category({ ...updateCategoryDto });
-    const updateResult = await this.categoriesRepository.update(id, category);
-    return updateResult;
+    return this.categoriesRepository.update(id, category);
   }
 
   /**
@@ -86,8 +85,7 @@ export class CategoriesService {
    * @param id ID
    * @returns 削除結果
    */
-  async remove(id: number) {
-    const deleteResult = await this.categoriesRepository.delete(id);
-    return deleteResult;
+  remove(id: number) {
+    return this.categoriesRepository.delete(id);
   }
 }

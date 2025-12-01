@@ -78,10 +78,9 @@ export class GroupsService {
    * @param updateGroupDto
    * @returns 更新結果
    */
-  async updateGroup(id: number, updateGroupDto: UpdateGroupDto) {
+  updateGroup(id: number, updateGroupDto: UpdateGroupDto) {
     const group = new Group({ ...updateGroupDto });
-    const updateResult = await this.groupsRepository.update(id, group);
-    return updateResult;
+    return this.groupsRepository.update(id, group);
   }
 
   /**
@@ -89,9 +88,8 @@ export class GroupsService {
    * @param id ID
    * @returns 削除結果
    */
-  async removeGroup(id: number) {
-    const deleteResult = await this.groupsRepository.delete(id);
-    return deleteResult;
+  removeGroup(id: number) {
+    return this.groupsRepository.delete(id);
   }
 
   /**
