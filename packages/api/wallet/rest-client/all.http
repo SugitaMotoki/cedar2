@@ -104,7 +104,7 @@ Accept: application/json
 {
   "groupId": 1,
   "title": "東急ストア",
-  "note": "メモ",
+  "note": "夜ご飯など",
   "paymentDate": "2025-12-01",
   "amount": 2000,
   "isIncome": false,
@@ -115,9 +115,70 @@ Accept: application/json
     { "userNo": 2, "amount": 1000 }
   ],
   "actuals": [
-    { "userNo": 1, "amount": 1000 },
+    { "userNo": 1, "amount": 2000 },
     { "userNo": 2, "amount": 0 }
   ]
+}
+
+### 支払い2作成
+POST http://localhost:4000/payments
+Content-Type: application/json
+Accept: application/json
+
+{
+  "groupId": 1,
+  "title": "東急ストア",
+  "note": "昼ごはんなど",
+  "paymentDate": "2025-12-02",
+  "amount": 4000,
+  "isIncome": false,
+  "categoryId": 2,
+  "userNoOfcreatedBy": 1,
+  "allocations": [
+    { "userNo": 1, "amount": 2000 },
+    { "userNo": 2, "amount": 2000 }
+  ],
+  "actuals": [
+    { "userNo": 1, "amount": 0 },
+    { "userNo": 2, "amount": 4000 }
+  ]
+}
+
+### 支払い3作成
+POST http://localhost:4000/payments
+Content-Type: application/json
+Accept: application/json
+
+{
+  "groupId": 1,
+  "title": "イオン",
+  "note": "色々",
+  "paymentDate": "2025-12-03",
+  "amount": 3000,
+  "isIncome": false,
+  "categoryId": 2,
+  "userNoOfcreatedBy": 1,
+  "allocations": [
+    { "userNo": 1, "amount": 1500 },
+    { "userNo": 2, "amount": 1500 }
+  ],
+  "actuals": [
+    { "userNo": 1, "amount": 3000 },
+    { "userNo": 2, "amount": 0 }
+  ]
+}
+
+### 精算1作成
+POST http://localhost:4000/settlements
+Content-Type: application/json
+Accept: application/json
+
+{
+  "from": 1,
+  "to": 2,
+  "amount": 1000,
+  "note": "",
+  "payments": [1, 2]
 }
 
 ### グループ全取得
@@ -143,3 +204,9 @@ GET http://localhost:4000/payments
 
 ### 支払い1取得
 GET http://localhost:4000/payments/1
+
+### 精算全取得
+GET http://localhost:4000/settlements
+
+### 精算1取得
+GET http://localhost:4000/settlements/1

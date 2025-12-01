@@ -61,16 +61,12 @@ export class PaymentsService {
     await this.paymentsRepository.save(payment);
 
     // 支払い割り当て
-    for (const allocation of allocations) {
-      await this.addAllocationToPayment(
-        payment.id,
-        allocation.userNo,
-        allocation.amount,
-      );
+    for (const { userNo, amount } of allocations) {
+      await this.addAllocationToPayment(payment.id, userNo, amount);
     }
     // 実際の支払い
-    for (const actual of actuals) {
-      await this.addActualToPayment(payment.id, actual.userNo, actual.amount);
+    for (const { userNo, amount } of actuals) {
+      await this.addActualToPayment(payment.id, userNo, amount);
     }
 
     return payment;
@@ -120,6 +116,17 @@ export class PaymentsService {
     const payment = new Payment({ ...updatePaymentDto });
     const updateResult = await this.paymentsRepository.update(id, payment);
     return updateResult;
+  }
+
+  /**
+   * 指定されたIDの支払い一覧を精算済みにするメソッド
+   * @param paymentIdList
+   */
+  async settlePayments(paymentIdList: number[]) {
+    await this.paymentsRepository.update(
+      paymentIdList,
+      new Payment({ isSettled: true }),
+    );
   }
 
   /**

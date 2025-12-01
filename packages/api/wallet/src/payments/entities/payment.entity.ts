@@ -6,6 +6,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -13,6 +14,7 @@ import {
 } from "typeorm";
 import { PaymentAllocation } from "./payment-allocation.entity";
 import { PaymentActual } from "./payment-actual.entity";
+import { Settlement } from "@/settlements/entities/settlement.entity";
 
 /**
  * 支払いに関するエンティティ
@@ -112,6 +114,12 @@ export class Payment {
    */
   @OneToMany(() => PaymentActual, (actual) => actual.payment)
   actuals: Relation<PaymentActual[]>;
+
+  /**
+   * 精算
+   */
+  @ManyToMany(() => Settlement, (settlement) => settlement.payments)
+  settlements: Relation<Settlement[]>;
 
   /**
    * コンストラクタ

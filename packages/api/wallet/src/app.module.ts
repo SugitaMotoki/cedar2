@@ -9,6 +9,7 @@ import { UsersModule } from "./users/users.module";
 import { CategoriesModule } from "./categories/categories.module";
 import { GroupsModule } from "./groups/groups.module";
 import { PaymentsModule } from "./payments/payments.module";
+import { SettlementsModule } from "./settlements/settlements.module";
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { PaymentsModule } from "./payments/payments.module";
     CategoriesModule,
     GroupsModule,
     PaymentsModule,
+    SettlementsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
