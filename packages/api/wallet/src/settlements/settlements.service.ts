@@ -79,7 +79,6 @@ export class SettlementsService {
   /**
    * 指定されたIDの精算を更新するメソッド
    * @param id
-   * @param updateSettlementDto
    * @returns 更新結果
    */
   updateSettlement(
@@ -101,7 +100,7 @@ export class SettlementsService {
    * @param id
    * @returns 削除結果
    */
-  async removeSettlement(id: number) {
+  removeSettlement(id: number) {
     return this.settlementsRepository.delete(id);
   }
 }

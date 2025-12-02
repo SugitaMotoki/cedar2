@@ -10,6 +10,7 @@ import { CategoriesModule } from "./categories/categories.module";
 import { GroupsModule } from "./groups/groups.module";
 import { PaymentsModule } from "./payments/payments.module";
 import { SettlementsModule } from "./settlements/settlements.module";
+import { PresetsModule } from "./presets/presets.module";
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { SettlementsModule } from "./settlements/settlements.module";
     GroupsModule,
     PaymentsModule,
     SettlementsModule,
+    PresetsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -181,6 +181,19 @@ Accept: application/json
   "payments": [1, 2]
 }
 
+### プリセット1作成
+POST http://localhost:4000/presets
+Content-Type: application/json
+Accept: application/json
+
+{
+  "groupId": 1,
+  "title": "マック",
+  "note": "メモ",
+  "isIncome": false,
+  "categoryId": 3
+}
+
 ### グループ全取得
 GET http://localhost:4000/groups
 
@@ -210,3 +223,6 @@ GET http://localhost:4000/settlements
 
 ### 精算1取得
 GET http://localhost:4000/settlements/1
+
+### プリセット1取得
+GET http://localhost:4000/presets/1
