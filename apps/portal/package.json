@@ -1,20 +1,22 @@
 {
-  "name": "portal",
+  "name": "@cedar2/portal",
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
+    "type-check": "nuxt typecheck",
     "lint": "eslint .",
-    "typecheck": "nuxt typecheck"
+    "format": "",
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
   },
   "dependencies": {
     "@iconify-json/lucide": "^1.2.74",
     "@iconify-json/simple-icons": "^1.2.59",
     "@nuxt/ui": "^4.2.1",
-    "nuxt": "^4.2.1"
+    "nuxt": "^4.2.1",
+    "tailwindcss": "^4.1.17"
   },
   "devDependencies": {
     "@nuxt/eslint": "^1.10.0",

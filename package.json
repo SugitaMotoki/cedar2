@@ -4,6 +4,7 @@
   "description": "杉の木システム",
   "main": "index.js",
   "scripts": {
+    "portal": "pnpm -F '@cedar2/portal'",
     "api:wallet": "pnpm -F '@cedar2/wallet'",
     "type-check": "turbo type-check",
     "lint": "turbo lint",
