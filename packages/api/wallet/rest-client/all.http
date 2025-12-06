@@ -1,0 +1,228 @@
+### ユーザ1作成
+POST http://localhost:4000/users
+Content-Type: application/json
+Accept: application/json
+
+{
+  "id": "太郎",
+  "password": "taro"
+}
+
+### ユーザ2作成
+POST http://localhost:4000/users
+Content-Type: application/json
+Accept: application/json
+
+{
+  "id": "花子",
+  "password": "hanako"
+}
+
+### ユーザ3作成
+POST http://localhost:4000/users
+Content-Type: application/json
+Accept: application/json
+
+{
+  "id": "健",
+  "password": "ken"
+}
+
+### グループ1作成
+POST http://localhost:4000/groups
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "神奈川県民",
+  "userNo": 1
+}
+
+### グループ1メンバ1追加
+POST http://localhost:4000/groups/1/members
+Content-Type: application/json
+Accept: application/json
+
+{
+  "userNo": 2
+}
+
+### グループ2作成
+POST http://localhost:4000/groups
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "ゴルフ部",
+  "userNo": 1
+}
+
+### グループ2メンバ2追加
+POST http://localhost:4000/groups/2/members
+Content-Type: application/json
+Accept: application/json
+
+{
+  "userNo": 2
+}
+
+### カテゴリ1追加
+POST http://localhost:4000/categories/
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "食費",
+  "parentId": null
+}
+
+### カテゴリ2追加
+POST http://localhost:4000/categories/
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "食材",
+  "parentId": 1
+}
+
+### カテゴリ3追加
+POST http://localhost:4000/categories/
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "外食",
+  "parentId": 1
+}
+
+### 支払い1作成
+POST http://localhost:4000/payments
+Content-Type: application/json
+Accept: application/json
+
+{
+  "groupId": 1,
+  "title": "東急ストア",
+  "note": "夜ご飯など",
+  "paymentDate": "2025-12-01",
+  "amount": 2000,
+  "isIncome": false,
+  "categoryId": 2,
+  "userNoOfcreatedBy": 1,
+  "allocations": [
+    { "userNo": 1, "amount": 1000 },
+    { "userNo": 2, "amount": 1000 }
+  ],
+  "actuals": [
+    { "userNo": 1, "amount": 2000 },
+    { "userNo": 2, "amount": 0 }
+  ]
+}
+
+### 支払い2作成
+POST http://localhost:4000/payments
+Content-Type: application/json
+Accept: application/json
+
+{
+  "groupId": 1,
+  "title": "東急ストア",
+  "note": "昼ごはんなど",
+  "paymentDate": "2025-12-02",
+  "amount": 4000,
+  "isIncome": false,
+  "categoryId": 2,
+  "userNoOfcreatedBy": 1,
+  "allocations": [
+    { "userNo": 1, "amount": 2000 },
+    { "userNo": 2, "amount": 2000 }
+  ],
+  "actuals": [
+    { "userNo": 1, "amount": 0 },
+    { "userNo": 2, "amount": 4000 }
+  ]
+}
+
+### 支払い3作成
+POST http://localhost:4000/payments
+Content-Type: application/json
+Accept: application/json
+
+{
+  "groupId": 1,
+  "title": "イオン",
+  "note": "色々",
+  "paymentDate": "2025-12-03",
+  "amount": 3000,
+  "isIncome": false,
+  "categoryId": 2,
+  "userNoOfcreatedBy": 1,
+  "allocations": [
+    { "userNo": 1, "amount": 1500 },
+    { "userNo": 2, "amount": 1500 }
+  ],
+  "actuals": [
+    { "userNo": 1, "amount": 3000 },
+    { "userNo": 2, "amount": 0 }
+  ]
+}
+
+### 精算1作成
+POST http://localhost:4000/settlements
+Content-Type: application/json
+Accept: application/json
+
+{
+  "from": 1,
+  "to": 2,
+  "amount": 1000,
+  "note": "",
+  "payments": [1, 2]
+}
+
+### プリセット1作成
+POST http://localhost:4000/presets
+Content-Type: application/json
+Accept: application/json
+
+{
+  "groupId": 1,
+  "title": "マック",
+  "note": "メモ",
+  "isIncome": false,
+  "categoryId": 3
+}
+
+### グループ全取得
+GET http://localhost:4000/groups
+
+### グループ1取得
+GET http://localhost:4000/groups/1
+
+### グループ1メンバー取得
+GET http://localhost:4000/groups/1/members
+
+### グループ2取得
+GET http://localhost:4000/groups/2
+
+### グループ2メンバー取得
+GET http://localhost:4000/groups/2/members
+
+### カテゴリ全取得
+GET http://localhost:4000/categories
+
+### 支払い全取得
+GET http://localhost:4000/payments
+
+### 支払い1取得
+GET http://localhost:4000/payments/1
+
+### 精算全取得
+GET http://localhost:4000/settlements
+
+### 精算1取得
+GET http://localhost:4000/settlements/1
+
+### プリセット1取得
+GET http://localhost:4000/presets/1

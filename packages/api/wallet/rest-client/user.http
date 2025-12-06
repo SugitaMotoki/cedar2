@@ -1,0 +1,26 @@
+## ユーザ
+
+### 全取得
+GET http://localhost:4000/users
+
+### 一部取得
+GET http://localhost:4000/users/1
+
+### 作成
+POST http://localhost:4000/users
+Content-Type: application/json
+Accept: application/json
+
+{
+  "id": "hato",
+  "password": "popopo"
+}
+
+### 更新
+PATCH  http://localhost:4000/users/1
+Content-Type: application/json
+Accept: application/json
+
+{
+  "password": "poh"
+}
