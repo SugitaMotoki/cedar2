@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { GetPaymentSummaryDto } from "#shared/dto/payment";
+import type { GetPaymentSummaryDto } from "@cedar2/interface/payment/dto/get_payment_summary";
 import { z } from "zod";
 
 // クエリパラメータ定義

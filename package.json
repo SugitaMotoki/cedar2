@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "portal": "pnpm -F '@cedar2/portal'",
+    "interface": "pnpm -F '@cedar2/interface'",
     "api:wallet": "pnpm -F '@cedar2/wallet'",
     "type-check": "turbo type-check",
     "lint": "turbo lint",

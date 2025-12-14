@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
-import { CreatePaymentDto } from "./dto/create-payment.dto";
-import { UpdatePaymentDto } from "./dto/update-payment.dto";
+import type { CreatePaymentDto } from "@cedar2/interface/payment/dto/create_payment";
+import type { UpdatePaymentDto } from "@cedar2/interface/payment/dto/update_payment";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Payment } from "./entities/payment.entity";
 import { Repository } from "typeorm";
