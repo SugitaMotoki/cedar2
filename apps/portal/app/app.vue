@@ -1,4 +1,8 @@
-<script setup>
+<script setup lang="ts">
+import type { NavigationMenuItem } from '@nuxt/ui'
+import { ja } from '@nuxt/ui/locale'
+
+// ヘッダ
 useHead({
   meta: [
     { name: 'viewport', content: 'width=device-width, initial-scale=1' }
@@ -7,13 +11,13 @@ useHead({
     { rel: 'icon', href: '/favicon.ico' }
   ],
   htmlAttrs: {
-    lang: 'en'
+    lang: 'ja'
   }
 })
 
-const title = 'Nuxt Starter Template'
-const description = 'A production-ready starter template powered by Nuxt UI. Build beautiful, accessible, and performant applications in minutes, not hours.'
-
+// メタデータ
+const title = '杉の木'
+const description = '杉の木ポータルサイト'
 useSeoMeta({
   title,
   description,
@@ -23,11 +27,31 @@ useSeoMeta({
   twitterImage: 'https://ui.nuxt.com/assets/templates/nuxt/starter-light.png',
   twitterCard: 'summary_large_image'
 })
+
+// ナビゲーションメニュー
+const route = useRoute()
+const items = computed<NavigationMenuItem[]>(() => [
+  {
+    label: '会計',
+    icon: 'i-tabler-pig-money',
+    to: '/docs/getting-started',
+    active: route.path.startsWith('/docs/getting-started')
+  }
+  // {
+  //   label: '写真',
+  //   to: '/docs/getting-started',
+  //   active: route.path.startsWith('/docs/getting-started')
+  // },
+])
 </script>
 
 <template>
-  <UApp>
-    <UHeader>
+  <UApp
+    :locale="ja"
+  >
+    <UHeader
+      mode="slideover"
+    >
       <template #left>
         <NuxtLink to="/">
           <AppLogo class="w-auto h-6 shrink-0" />
@@ -36,16 +60,17 @@ useSeoMeta({
         <TemplateMenu />
       </template>
 
+      <UNavigationMenu :items="items" />
+
       <template #right>
         <UColorModeButton />
+      </template>
 
-        <UButton
-          to="https://github.com/nuxt-ui-templates/starter"
-          target="_blank"
-          icon="i-simple-icons-github"
-          aria-label="GitHub"
-          color="neutral"
-          variant="ghost"
+      <template #body>
+        <UNavigationMenu
+          :items="items"
+          orientation="vertical"
+          class="-mx-2.5"
         />
       </template>
     </UHeader>

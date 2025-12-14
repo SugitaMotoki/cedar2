@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "type-check": "nuxt typecheck",
-    "lint": "eslint .",
+    "lint": "eslint . --fix",
     "format": "",
     "dev": "nuxt dev",
     "build": "nuxt build",
@@ -16,7 +16,8 @@
     "@iconify-json/simple-icons": "^1.2.59",
     "@nuxt/ui": "^4.2.1",
     "nuxt": "^4.2.1",
-    "tailwindcss": "^4.1.17"
+    "tailwindcss": "^4.1.17",
+    "zod": "^4.1.13"
   },
   "devDependencies": {
     "@nuxt/eslint": "^1.10.0",

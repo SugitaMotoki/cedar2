@@ -1,5 +1,15 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  runtimeConfig: {
+    public: {
+      WALLET: {
+        SCHEME: process.env["WALLET_SHCEME"] || "http",
+        FQDN: process.env["WALLET_FQDN"] || "localhost",
+        PORT: process.env["WALLET_PORT"] || "4000",
+      }
+    }
+  },
+
   modules: [
     '@nuxt/eslint',
     '@nuxt/ui'
