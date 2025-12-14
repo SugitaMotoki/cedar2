@@ -15,7 +15,10 @@
     "@iconify-json/lucide": "^1.2.74",
     "@iconify-json/simple-icons": "^1.2.59",
     "@nuxt/ui": "^4.2.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
     "nuxt": "^4.2.1",
+    "prettier": "^3.7.2",
     "tailwindcss": "^4.1.17",
     "zod": "^4.1.13"
   },
