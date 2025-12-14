@@ -1,57 +1,49 @@
 <script setup lang="ts">
-import type { NavigationMenuItem } from '@nuxt/ui'
-import { ja } from '@nuxt/ui/locale'
+import type { NavigationMenuItem } from "@nuxt/ui";
+import { ja } from "@nuxt/ui/locale";
 
 // ヘッダ
 useHead({
-  meta: [
-    { name: 'viewport', content: 'width=device-width, initial-scale=1' }
-  ],
-  link: [
-    { rel: 'icon', href: '/favicon.ico' }
-  ],
+  meta: [{ name: "viewport", content: "width=device-width, initial-scale=1" }],
+  link: [{ rel: "icon", href: "/favicon.ico" }],
   htmlAttrs: {
-    lang: 'ja'
-  }
-})
+    lang: "ja",
+  },
+});
 
 // メタデータ
-const title = '杉の木'
-const description = '杉の木ポータルサイト'
+const title = "杉の木";
+const description = "杉の木ポータルサイト";
 useSeoMeta({
   title,
   description,
   ogTitle: title,
   ogDescription: description,
-  ogImage: 'https://ui.nuxt.com/assets/templates/nuxt/starter-light.png',
-  twitterImage: 'https://ui.nuxt.com/assets/templates/nuxt/starter-light.png',
-  twitterCard: 'summary_large_image'
-})
+  ogImage: "https://ui.nuxt.com/assets/templates/nuxt/starter-light.png",
+  twitterImage: "https://ui.nuxt.com/assets/templates/nuxt/starter-light.png",
+  twitterCard: "summary_large_image",
+});
 
 // ナビゲーションメニュー
-const route = useRoute()
+const route = useRoute();
 const items = computed<NavigationMenuItem[]>(() => [
   {
-    label: '会計',
-    icon: 'i-tabler-pig-money',
-    to: '/docs/getting-started',
-    active: route.path.startsWith('/docs/getting-started')
-  }
+    label: "会計",
+    icon: "i-tabler-pig-money",
+    to: "/docs/getting-started",
+    active: route.path.startsWith("/docs/getting-started"),
+  },
   // {
   //   label: '写真',
   //   to: '/docs/getting-started',
   //   active: route.path.startsWith('/docs/getting-started')
   // },
-])
+]);
 </script>
 
 <template>
-  <UApp
-    :locale="ja"
-  >
-    <UHeader
-      mode="slideover"
-    >
+  <UApp :locale="ja">
+    <UHeader mode="slideover">
       <template #left>
         <NuxtLink to="/">
           <AppLogo class="w-auto h-6 shrink-0" />

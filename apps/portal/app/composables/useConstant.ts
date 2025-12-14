@@ -4,7 +4,7 @@ import type { RuntimeConfig } from "nuxt/schema";
  * 定数を利用するためのコンポーザブル
  */
 export const useConstant = () => {
-  const config = useRuntimeConfig()
+  const config = useRuntimeConfig();
 
   return {
     /**
@@ -12,13 +12,13 @@ export const useConstant = () => {
      */
     WALLET: getWalletConfig(config),
   } as const;
-}
+};
 
 /**
  * 会計APIに関するコンフィグを取得する関数
  */
 const getWalletConfig = (config: RuntimeConfig) => {
-  const { SCHEME, FQDN, PORT } = config.public.WALLET
+  const { SCHEME, FQDN, PORT } = config.public.WALLET;
   return {
     /**
      * ベースURL
@@ -32,7 +32,7 @@ const getWalletConfig = (config: RuntimeConfig) => {
       /**
        * 支払い
        */
-      PAYMENTS: "payments"
-    }
-  }
-}
+      PAYMENTS: "payments",
+    },
+  };
+};

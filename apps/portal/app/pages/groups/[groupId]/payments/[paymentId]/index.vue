@@ -1,12 +1,8 @@
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <UPage>
-    <UPageHeader
-      title="ID"
-      headline="支払い"
-    />
+    <UPageHeader title="ID" headline="支払い" />
 
     <UPageBody />
   </UPage>

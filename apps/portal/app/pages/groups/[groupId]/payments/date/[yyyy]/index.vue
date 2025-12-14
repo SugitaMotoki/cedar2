@@ -1,14 +1,11 @@
 <script setup lang="ts">
-const route = useRoute()
-const yyyy = route.params['yyyy']
+const route = useRoute();
+const yyyy = route.params["yyyy"];
 </script>
 
 <template>
   <UPage>
-    <UPageHeader
-      :title="`${yyyy}年`"
-      headline="支払い"
-    />
+    <UPageHeader :title="`${yyyy}年`" headline="支払い" />
 
     <UPageBody />
   </UPage>

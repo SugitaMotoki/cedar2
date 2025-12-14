@@ -1,4 +1,4 @@
-import { z } from "zod"
+import { z } from "zod";
 
 /**
  * Zodスキーマを利用するためのコンポーザブル
@@ -29,5 +29,5 @@ export const useZodSchema = () => {
      * 日
      */
     dd: z.string().regex(/^\d{2}$/),
-  }
-}
+  };
+};

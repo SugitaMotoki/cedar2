@@ -1,19 +1,19 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import type { GetPaymentSummaryDto } from '#shared/dto/payment'
-import type { RouteLocationRaw } from 'vue-router'
+import { computed } from "vue";
+import type { GetPaymentSummaryDto } from "#shared/dto/payment";
+import type { RouteLocationRaw } from "vue-router";
 
 const props = defineProps<{
-  payment: GetPaymentSummaryDto
-  to?: RouteLocationRaw
-}>()
+  payment: GetPaymentSummaryDto;
+  to?: RouteLocationRaw;
+}>();
 
 const title = computed(() => {
-  const dateStr = props.payment.paymentDate.toString().replaceAll('-', '/')
-  return `${dateStr} ${props.payment.title}`
-})
+  const dateStr = props.payment.paymentDate.toString().replaceAll("-", "/");
+  return `${dateStr} ${props.payment.title}`;
+});
 
-const description = computed(() => `¥${props.payment.amount}`)
+const description = computed(() => `¥${props.payment.amount}`);
 </script>
 
 <template>

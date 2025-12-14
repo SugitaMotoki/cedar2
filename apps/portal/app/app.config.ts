@@ -1,13 +1,13 @@
 export default defineAppConfig({
   ui: {
     colors: {
-      primary: 'green',
-      neutral: 'slate'
+      primary: "green",
+      neutral: "slate",
     },
     pageHeader: {
       slots: {
-        root: 'relative border-b border-default p-4'
-      }
-    }
-  }
-})
+        root: "relative border-b border-default p-4",
+      },
+    },
+  },
+});
