@@ -8,12 +8,14 @@ import {
   Delete,
 } from "@nestjs/common";
 import { PaymentsService } from "./payments.service";
-import { CreatePaymentDto } from "./dto/create-payment.dto";
-import { UpdatePaymentDto } from "./dto/update-payment.dto";
-import { AddAllocationDto } from "./dto/add-allocation.dto";
-import { UpdateAllocationDto } from "./dto/update-allocation.dto";
-import { AddActualDto } from "./dto/add-actual.dto";
-import { UpdateActualDto } from "./dto/update-actual.dto";
+import type {
+  CreatePaymentDto,
+  UpdatePaymentDto,
+  CreateAllocationDto,
+  UpdateAllocationDto,
+  CreateActualDto,
+  UpdateActualDto,
+} from "@cedar2/interface";
 
 /**
  * 支払いに関するコントローラ
@@ -53,7 +55,7 @@ export class PaymentsController {
   @Post(":paymentId/allocations")
   addAllocationToPayment(
     @Param("paymentId") paymentId: string,
-    @Body() { userNo, amount }: AddAllocationDto,
+    @Body() { userNo, amount }: CreateAllocationDto,
   ) {
     return this.paymentsService.addAllocationToPayment(
       +paymentId,
@@ -82,7 +84,7 @@ export class PaymentsController {
   @Post(":paymentId/actuals")
   addActualToPayment(
     @Param("paymentId") paymentId: string,
-    @Body() { userNo, amount }: AddActualDto,
+    @Body() { userNo, amount }: CreateActualDto,
   ) {
     return this.paymentsService.addActualToPayment(+paymentId, userNo, amount);
   }
