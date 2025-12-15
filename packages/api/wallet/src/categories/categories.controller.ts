@@ -8,8 +8,7 @@ import {
   Delete,
 } from "@nestjs/common";
 import { CategoriesService } from "./categories.service";
-import { CreateCategoryDto } from "./dto/create-category.dto";
-import { UpdateCategoryDto } from "./dto/update-category.dto";
+import type { CreateCategoryDto, UpdateCategoryDto } from "@cedar2/interface";
 
 /**
  * カテゴリに関するコントローラ

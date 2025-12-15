@@ -1,6 +1,8 @@
 import { Injectable } from "@nestjs/common";
-import { CreateSettlementDto } from "./dto/create-settlement.dto";
-import { UpdateSettlementDto } from "./dto/update-settlement.dto";
+import type {
+  CreateSettlementDto,
+  UpdateSettlementDto,
+} from "@cedar2/interface";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Settlement } from "./entities/settlement.entity";
 import { Repository } from "typeorm";

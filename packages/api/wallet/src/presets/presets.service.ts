@@ -1,6 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { CreatePresetDto } from "./dto/create-preset.dto";
-import { UpdatePresetDto } from "./dto/update-preset.dto";
+import type { CreatePresetDto, UpdatePresetDto } from "@cedar2/interface";
 import { Preset } from "./entities/preset.entity";
 import { Group } from "@/groups/entities/group.entity";
 import { Category } from "@/categories/entities/category.entity";

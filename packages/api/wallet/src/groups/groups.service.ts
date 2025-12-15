@@ -1,6 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { CreateGroupDto } from "./dto/create-group.dto";
-import { UpdateGroupDto } from "./dto/update-group.dto";
+import type { CreateGroupDto, UpdateGroupDto } from "@cedar2/interface";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Group } from "./entities/group.entity";
 import { Repository } from "typeorm";

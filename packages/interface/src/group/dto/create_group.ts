@@ -1,7 +1,7 @@
 /**
  * グループ作成用DTO
  */
-export class CreateGroupDto {
+export interface CreateGroupDto {
   /**
    * 名前
    */

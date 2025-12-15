@@ -1,7 +1,7 @@
 /**
  * プリセット作成用DTO
  */
-export class CreatePresetDto {
+export interface CreatePresetDto {
   /**
    * グループID
    */

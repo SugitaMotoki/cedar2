@@ -1,7 +1,7 @@
 /**
  * メンバ追加用DTO
  */
-export class AddMemberDto {
+export interface CreateMemberDto {
   /**
    * ユーザの通し番号
    */

@@ -8,8 +8,7 @@ import {
   Delete,
 } from "@nestjs/common";
 import { UsersService } from "./users.service";
-import { CreateUserDto } from "./dto/create-user.dto";
-import { UpdateUserDto } from "./dto/update-user.dto";
+import type { CreateUserDto, UpdateUserDto } from "@cedar2/interface";
 
 /**
  * ユーザに関するコントローラ

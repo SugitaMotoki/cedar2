@@ -1,7 +1,7 @@
 /**
  * 精算作成用DTO
  */
-export class CreateSettlementDto {
+export interface CreateSettlementDto {
   /**
    * 支払ったユーザの通し番号
    */

@@ -1,7 +1,7 @@
 /**
- * カテゴリ作成用DTO
+ * カテゴリ更新用DTO
  */
-export class CreateCategoryDto {
+export interface UpdateCategoryDto {
   /**
    * 名前
    */
