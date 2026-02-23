@@ -7,7 +7,7 @@ import {
   CreateDateColumn,
   Entity,
   OneToMany,
-  PrimaryGeneratedColumn,
+  PrimaryColumn,
   UpdateDateColumn,
 } from "typeorm";
 
@@ -17,17 +17,9 @@ import {
 @Entity()
 export class User {
   /**
-   * 通し番号
-   */
-  @PrimaryGeneratedColumn()
-  no: number;
-
-  /**
    * ID
    */
-  @Column({
-    unique: true,
-  })
+  @PrimaryColumn()
   id: string;
 
   /**

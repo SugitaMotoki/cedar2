@@ -43,7 +43,7 @@ export interface CreatePaymentDto {
   /**
    * 作成者
    */
-  userNoOfcreatedBy: number;
+  createdBy: string;
 
   /**
    * 支払い割り当て一覧

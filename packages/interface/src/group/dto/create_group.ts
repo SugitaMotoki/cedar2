@@ -8,7 +8,7 @@ export interface CreateGroupDto {
   name: string;
 
   /**
-   * ユーザの通し番号
+   * 作成者
    */
-  userNo: number;
+  createdBy: string;
 }

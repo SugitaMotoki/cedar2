@@ -55,11 +55,11 @@ export class PaymentsController {
   @Post(":paymentId/allocations")
   addAllocationToPayment(
     @Param("paymentId") paymentId: string,
-    @Body() { userNo, amount }: CreateAllocationDto,
+    @Body() { userId, amount }: CreateAllocationDto,
   ) {
     return this.paymentsService.addAllocationToPayment(
       +paymentId,
-      userNo,
+      userId,
       amount,
     );
   }
@@ -84,9 +84,9 @@ export class PaymentsController {
   @Post(":paymentId/actuals")
   addActualToPayment(
     @Param("paymentId") paymentId: string,
-    @Body() { userNo, amount }: CreateActualDto,
+    @Body() { userId, amount }: CreateActualDto,
   ) {
-    return this.paymentsService.addActualToPayment(+paymentId, userNo, amount);
+    return this.paymentsService.addActualToPayment(+paymentId, userId, amount);
   }
 
   @Patch(":paymentId/actuals/:actualId")

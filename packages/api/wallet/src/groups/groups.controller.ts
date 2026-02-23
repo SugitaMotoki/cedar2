@@ -56,7 +56,7 @@ export class GroupsController {
   ) {
     return this.groupsService.addMemberToGroup(
       +groupId,
-      createMemberDto.userNo,
+      createMemberDto.userId,
     );
   }
 

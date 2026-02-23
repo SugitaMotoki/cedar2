@@ -16,7 +16,7 @@ const commonSchema = useZodSchema();
 const props = defineProps<{
   groupId: number;
   paymentDate: string;
-  userNoOfcreatedBy: number;
+  createdBy: string;
   users: GetUserSummaryDto[];
 }>();
 
@@ -36,19 +36,19 @@ const categories = computed((): GetCategoryDto[] => {
 
 // フォーム定義
 const formSchema = z.object({
-  title: z.string().nonempty("タイトルは必須です。"),
+  title: z.string().min(1, "タイトルは必須です。"),
   note: z.string(),
   categoryId: z.number("カテゴリは必須です。"),
   amount: commonSchema.amount,
   allocations: z.array(
     z.object({
-      userNo: z.number(),
+      userId: commonSchema.userId,
       amount: commonSchema.amount,
     }),
   ),
   actuals: z.array(
     z.object({
-      userNo: z.number(),
+      userId: commonSchema.userId,
       amount: commonSchema.amount,
     }),
   ),
@@ -59,8 +59,8 @@ const state = reactive<Partial<FormSchema>>({
   note: "",
   categoryId: undefined,
   amount: 0,
-  allocations: props.users.map((u) => ({ userNo: u.no, amount: 0 })),
-  actuals: props.users.map((u) => ({ userNo: u.no, amount: 0 })),
+  allocations: props.users.map((u) => ({ userId: u.id, amount: 0 })),
+  actuals: props.users.map((u) => ({ userId: u.id, amount: 0 })),
 });
 
 /**
@@ -75,16 +75,16 @@ const onSubmit = async (event: FormSubmitEvent<FormSchema>) => {
     amount: state.amount!,
     isIncome: false,
     categoryId: state.categoryId!,
-    userNoOfcreatedBy: props.userNoOfcreatedBy,
+    createdBy: props.createdBy,
     allocations: state.allocations!,
     actuals: state.actuals!,
     // allocations: [
-    //   { userNo: 1, amount: 100 },
-    //   { userNo: 2, amount: 100 },
+    //   { userId: "taro", amount: 100 },
+    //   { userId: "hanako", amount: 100 },
     // ],
     // actuals: [
-    //   { userNo: 1, amount: 200 },
-    //   { userNo: 2, amount: 0 },
+    //   { userId: "taro", amount: 200 },
+    //   { userId: "hanako", amount: 0 },
     // ],
   };
 

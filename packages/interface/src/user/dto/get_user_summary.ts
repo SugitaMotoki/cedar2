@@ -3,11 +3,6 @@
  */
 export interface GetUserSummaryDto {
   /**
-   * 通し番号
-   */
-  no: number;
-
-  /**
    * ID
    */
   id: string;

@@ -3,14 +3,14 @@
  */
 export interface UpdateSettlementDto {
   /**
-   * 支払ったユーザの通し番号
+   * 支払ったユーザのID
    */
-  from: number;
+  from: string;
 
   /**
-   * 支払われたユーザの通し番号
+   * 支払われたユーザのID
    */
-  to: number;
+  to: string;
 
   /**
    * 金額

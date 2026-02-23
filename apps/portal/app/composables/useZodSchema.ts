@@ -16,9 +16,9 @@ export const useZodSchema = () => {
     paymentId: z.string().min(1),
 
     /**
-     * ユーザの通し番号
+     * ユーザID
      */
-    userNo: z.number().min(1),
+    userId: z.string().min(1),
 
     /**
      * 年

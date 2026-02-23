@@ -3,9 +3,9 @@
  */
 export interface CreateAllocationDto {
   /**
-   * ユーザの通し番号
+   * ユーザID
    */
-  userNo: number;
+  userId: string;
 
   /**
    * 金額

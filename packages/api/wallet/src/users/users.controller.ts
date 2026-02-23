@@ -31,23 +31,18 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
-  @Get(":no")
-  findByNoOrThrow(@Param("no") no: string) {
-    return this.usersService.findByNoOrThrow(+no); // TODO: 型チェック
-  }
-
   @Get(":id")
   findByIdOrThrow(@Param("id") id: string) {
     return this.usersService.findByIdOrThrow(id);
   }
 
-  @Patch(":no")
-  update(@Param("no") no: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(+no, updateUserDto);
+  @Patch(":id")
+  update(@Param("id") id: string, @Body() updateUserDto: UpdateUserDto) {
+    return this.usersService.update(id, updateUserDto);
   }
 
-  @Delete(":no")
-  remove(@Param("no") no: string) {
-    return this.usersService.remove(+no);
+  @Delete(":id")
+  remove(@Param("id") id: string) {
+    return this.usersService.remove(id);
   }
 }

@@ -3,9 +3,9 @@
  */
 export interface CreateActualDto {
   /**
-   * ユーザの通し番号
+   * ユーザId
    */
-  userNo: number;
+  userId: string;
 
   /**
    * 金額

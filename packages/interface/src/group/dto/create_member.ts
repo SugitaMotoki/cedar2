@@ -3,7 +3,7 @@
  */
 export interface CreateMemberDto {
   /**
-   * ユーザの通し番号
+   * ユーザID
    */
-  userNo: number;
+  userId: string;
 }

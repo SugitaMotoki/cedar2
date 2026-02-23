@@ -62,19 +62,6 @@ export class UsersService {
   }
 
   /**
-   * 指定された通し番号のユーザを取得するメソッド
-   * @param no 通し番号
-   * @returns 指定された通し番号のユーザ（なければエラー）
-   */
-  findByNoOrThrow(no: number): Promise<Readonly<User>> {
-    return this.usersRepository.findOneOrFail({
-      where: {
-        no,
-      },
-    });
-  }
-
-  /**
    * 指定されたIDのユーザを取得するメソッド
    * @param id ID
    * @returns 指定されたIDのユーザ（なければエラー）
@@ -88,25 +75,25 @@ export class UsersService {
   }
 
   /**
-   * 指定された通し番号のユーザを更新するメソッド
-   * @param no 通し番号
+   * 指定されたIDのユーザを更新するメソッド
+   * @param id ID
    * @param updateUserDto
    * @returns 更新結果
    */
   update(
-    no: number,
+    id: string,
     updateUserDto: UpdateUserDto,
   ): Promise<Readonly<UpdateResult>> {
     const user = new User({ ...updateUserDto });
-    return this.usersRepository.update(no, user);
+    return this.usersRepository.update({ id }, user);
   }
 
   /**
-   * 指定された通し番号のユーザを削除するメソッド
-   * @param no 通し番号
+   * 指定されたIDのユーザを削除するメソッド
+   * @param id ID
    * @returns 削除結果
    */
-  remove(no: number): Promise<Readonly<DeleteResult>> {
-    return this.usersRepository.delete(no);
+  remove(id: string): Promise<Readonly<DeleteResult>> {
+    return this.usersRepository.delete({ id });
   }
 }

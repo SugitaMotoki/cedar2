@@ -35,16 +35,14 @@ const dd = ref(data.dd);
         <PaymentForm
           :group-id="1"
           :payment-date="'2026-01-01'"
-          :user-no-ofcreated-by="1"
+          :created-by="'taro'"
           :users="[
             {
-              no: 1,
               id: 'user01',
               createdAt: '',
               updatedAt: '',
             },
             {
-              no: 2,
               id: 'user02',
               createdAt: '',
               updatedAt: '',
