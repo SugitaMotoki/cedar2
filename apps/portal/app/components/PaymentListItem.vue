@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import type { GetPaymentSummaryDto } from "#shared/dto/payment";
+import type { GetPaymentSummaryDto } from "@cedar2/interface";
 import type { RouteLocationRaw } from "vue-router";
 
 const props = defineProps<{
@@ -8,7 +8,7 @@ const props = defineProps<{
   to?: RouteLocationRaw;
 }>();
 
-const title = computed(() => {
+const title = computed((): string => {
   const dateStr = props.payment.paymentDate.toString().replaceAll("-", "/");
   return `${dateStr} ${props.payment.title}`;
 });

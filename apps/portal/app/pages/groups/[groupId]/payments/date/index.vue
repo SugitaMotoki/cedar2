@@ -46,7 +46,7 @@ const getDateLinkObject = (
 
 <template>
   <UPage>
-    <UPageHeader title="カレンダー" headline="支払い" />
+    <UPageHeader title="日付選択" headline="支払い" />
 
     <UPageBody>
       <UCalendar v-model="modelValue">

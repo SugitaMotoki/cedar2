@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { GetPaymentSummaryDto } from "@cedar2/interface";
 import { z } from "zod";
 
 // クエリパラメータ定義
@@ -22,17 +21,9 @@ if (!success) {
 }
 
 // クエリパラメータ取得
-const groupId = ref(data.groupId);
 const yyyy = ref(data.yyyy);
 const mm = ref(data.mm);
 const dd = ref(data.dd);
-
-// 支払い一覧を取得
-const { WALLET } = useConstant();
-const { data: payments } = await useFetch<GetPaymentSummaryDto[]>(
-  WALLET.RESOURCE.PAYMENTS,
-  { baseURL: WALLET.BASE_URL },
-);
 </script>
 
 <template>
@@ -40,20 +31,27 @@ const { data: payments } = await useFetch<GetPaymentSummaryDto[]>(
     <UPageHeader :title="`${yyyy}/${mm}/${dd}`" headline="支払い" />
 
     <UPageBody>
-      <UPageList divide>
-        <PaymentListItem
-          v-for="(payment, index) in payments"
-          :key="index"
-          :to="{
-            name: 'groups-groupId-payments-paymentId',
-            params: {
-              groupId,
-              paymentId: payment.id,
+      <UContainer>
+        <PaymentForm
+          :group-id="1"
+          :payment-date="'2026-01-01'"
+          :user-no-ofcreated-by="1"
+          :users="[
+            {
+              no: 1,
+              id: 'user01',
+              createdAt: '',
+              updatedAt: '',
             },
-          }"
-          :payment="payment"
+            {
+              no: 2,
+              id: 'user02',
+              createdAt: '',
+              updatedAt: '',
+            },
+          ]"
         />
-      </UPageList>
+      </UContainer>
     </UPageBody>
   </UPage>
 </template>
