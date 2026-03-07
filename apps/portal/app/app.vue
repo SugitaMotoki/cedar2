@@ -35,12 +35,6 @@ const items = computed<NavigationMenuItem[]>(() => [
   },
 ]);
 const isLoginPage = computed(() => route.path.startsWith("/login"));
-
-// const userStore = useUserStore();
-// if (!isLoginPage.value) {
-//   await userStore.fetch()
-//   // await callOnce(userStore.fetch);
-// }
 </script>
 
 <template>

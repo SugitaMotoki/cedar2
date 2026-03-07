@@ -1,14 +1,5 @@
 <script setup lang="ts">
-// import type {
-//   GetUserSummaryDto,
-// } from "@cedar2/interface";
-
-// const { user } = defineProps<{
-//   user: GetUserSummaryDto;
-// }>();
-
-const { dto: user, fetch } = useUserStore();
-await callOnce(fetch);
+const { dto: user } = useUserStore();
 </script>
 
 <template>
