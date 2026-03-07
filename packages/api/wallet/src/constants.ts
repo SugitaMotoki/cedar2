@@ -35,6 +35,11 @@ export const ENV = {
      * ポート
      */
     PORT: "WALLET_PORT",
+
+    /**
+     * JWTのシークレットキー
+     */
+    JWT_SECRET: "WALLET_JWT_SECRET",
   },
 
   /**
@@ -61,4 +66,19 @@ export const ENV = {
      */
     PORT: "DB_PORT",
   },
+} as const;
+
+/**
+ * 認証関連の定数
+ */
+export const AUTH = {
+  /**
+   * 公開であることを表すキー
+   */
+  IS_PUBLIC_KEY: "isPublic",
+
+  /**
+   * アクセストークン
+   */
+  ACCESS_TOKEN: "access_token",
 } as const;

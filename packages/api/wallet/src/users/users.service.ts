@@ -75,6 +75,25 @@ export class UsersService {
   }
 
   /**
+   * 指定されたIDのユーザをパスワード付きで取得するメソッド
+   * @param id ID
+   * @returns 指定されたIDのユーザ（なければnull）
+   */
+  findWithPasswordByIdOrNull(id: string): Promise<Readonly<User> | null> {
+    return this.usersRepository.findOne({
+      where: {
+        id,
+      },
+      select: {
+        id: true,
+        password: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
+  }
+
+  /**
    * 指定されたIDのユーザを更新するメソッド
    * @param id ID
    * @param updateUserDto
