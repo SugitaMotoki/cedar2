@@ -14,12 +14,17 @@ export const useConstant = () => {
         /**
          * ベースURL
          */
-        BASE_URL: "api",
+        BASE_URL: "/",
 
         /**
          * ログイン
          */
-        LOGIN: "login",
+        LOGIN: "api/login",
+
+        /**
+         * Wallet
+         */
+        WALLET: "api/wallet",
       },
 
       /**
@@ -39,6 +44,11 @@ export const useConstant = () => {
            * ログイン
            */
           LOGIN: "auth/login",
+
+          /**
+           * プロフィール
+           */
+          PROFILE: "auth/profile",
         },
 
         /**

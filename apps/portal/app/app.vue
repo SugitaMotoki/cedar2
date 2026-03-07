@@ -33,17 +33,19 @@ const items = computed<NavigationMenuItem[]>(() => [
     to: "/login",
     active: route.path.startsWith("/login"),
   },
-  // {
-  //   label: '写真',
-  //   to: '/docs/getting-started',
-  //   active: route.path.startsWith('/docs/getting-started')
-  // },
 ]);
+const isLoginPage = computed(() => route.path.startsWith("/login"));
+
+// const userStore = useUserStore();
+// if (!isLoginPage.value) {
+//   await userStore.fetch()
+//   // await callOnce(userStore.fetch);
+// }
 </script>
 
 <template>
   <UApp :locale="ja">
-    <UHeader mode="slideover">
+    <UHeader mode="modal">
       <template #left>
         <NuxtLink to="/">
           <AppLogo class="w-auto h-6 shrink-0" />
@@ -52,18 +54,23 @@ const items = computed<NavigationMenuItem[]>(() => [
         <TemplateMenu />
       </template>
 
-      <UNavigationMenu :items="items" />
+      <UNavigationMenu v-if="!isLoginPage" :items="items" />
 
       <template #right>
         <UColorModeButton />
       </template>
 
       <template #body>
-        <UNavigationMenu
-          :items="items"
-          orientation="vertical"
-          class="-mx-2.5"
-        />
+        <div v-if="!isLoginPage">
+          <UserInfo />
+          <USeparator icon="i-simple-icons-nuxtdotjs" />
+          <UNavigationMenu
+            :items="items"
+            orientation="vertical"
+            class="-mx-2.5"
+          />
+        </div>
+        <div v-else>ログインしてください</div>
       </template>
     </UHeader>
 

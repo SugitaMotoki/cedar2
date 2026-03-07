@@ -4,7 +4,7 @@ import type { FormSubmitEvent } from "@nuxt/ui";
 
 // 定数
 const commonSchema = useZodSchema();
-const { login } = useAuth();
+const { login } = useUserStore();
 
 // フォームのスキーマ
 const formSchema = z.object({
