@@ -3,6 +3,7 @@ import { UsersService } from "@/users/users.service";
 import { JwtPayload } from "@cedar2/interface";
 import { Injectable } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
+import { compare } from "bcrypt";
 
 /**
  * 認証に関するサービス
@@ -29,7 +30,10 @@ export class AuthService {
     password: string,
   ): Promise<Readonly<User> | null> {
     const user = await this.usersService.findWithPasswordByIdOrNull(userId);
-    return user?.password === password ? user : null;
+    if (!user || !user.password) {
+      return null;
+    }
+    return (await compare(password, user.password)) ? user : null;
   }
 
   /**

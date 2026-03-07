@@ -9,6 +9,7 @@ import {
 } from "@nestjs/common";
 import { UsersService } from "./users.service";
 import type { CreateUserDto, UpdateUserDto } from "@cedar2/interface";
+import { Public } from "@/auth/public.decorator";
 
 /**
  * ユーザに関するコントローラ
@@ -21,6 +22,7 @@ export class UsersController {
    */
   constructor(private readonly usersService: UsersService) {}
 
+  @Public()
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);

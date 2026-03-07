@@ -10,9 +10,9 @@ export default defineNuxtPlugin((nuxtApp) => {
   const walletFetch = $fetch.create({
     baseURL: `${API.PORTAL.BASE_URL}${API.PORTAL.WALLET}`,
     onRequest: ({ options }) => {
-      const { cookie } = useRequestHeaders(['cookie'])
+      const { cookie } = useRequestHeaders(["cookie"]);
       if (import.meta.server && cookie) {
-        options.headers.append("cookie", cookie!)
+        options.headers.append("cookie", cookie!);
       }
     },
     onResponseError: async ({ response }) => {

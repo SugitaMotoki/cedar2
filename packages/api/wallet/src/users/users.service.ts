@@ -5,6 +5,7 @@ import { User } from "./entities/user.entity";
 import { Repository } from "typeorm";
 import { UpdateResult } from "typeorm/browser";
 import { DeleteResult } from "typeorm/browser";
+import { genSalt, hash } from "bcrypt";
 
 /**
  * ユーザに関するサービス
@@ -25,8 +26,12 @@ export class UsersService {
    * @param createUserDto
    * @returns 作成したユーザ
    */
-  async create(createUserDto: CreateUserDto): Promise<Readonly<User>> {
-    const user = new User({ ...createUserDto });
+  async create({ id, password }: CreateUserDto): Promise<Readonly<User>> {
+    const salt = await genSalt();
+    const user = new User({
+      id,
+      password: await hash(password, salt),
+    });
     await this.usersRepository.save(user);
     user.password = "The password has been hidden.";
     return user;
