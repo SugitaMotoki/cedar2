@@ -9,7 +9,7 @@ import type {
 } from "@cedar2/interface";
 
 // 定数
-const { WALLET } = useConstant();
+const { API } = useConstant();
 const commonSchema = useZodSchema();
 
 // プロパティ
@@ -24,7 +24,7 @@ const props = defineProps<{
 const { data: categoryTree } = await useFetch<GetCategoryTreeDto[]>(
   "categories",
   {
-    baseURL: WALLET.BASE_URL,
+    baseURL: API.WALLET.BASE_URL,
   },
 );
 const categories = computed((): GetCategoryDto[] => {
@@ -88,8 +88,8 @@ const onSubmit = async (event: FormSubmitEvent<FormSchema>) => {
     // ],
   };
 
-  await useFetch(WALLET.RESOURCE.PAYMENTS, {
-    baseURL: WALLET.BASE_URL,
+  await useFetch(API.WALLET.PAYMENTS, {
+    baseURL: API.WALLET.BASE_URL,
     method: "POST",
     body: createPaymentDto,
   });

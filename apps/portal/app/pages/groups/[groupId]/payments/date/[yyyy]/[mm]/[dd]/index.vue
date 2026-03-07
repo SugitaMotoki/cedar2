@@ -28,10 +28,10 @@ const mm = ref(data.mm);
 const dd = ref(data.dd);
 
 // 支払い一覧を取得
-const { WALLET } = useConstant();
+const { API } = useConstant();
 const { data: payments } = await useFetch<GetPaymentSummaryDto[]>(
-  WALLET.RESOURCE.PAYMENTS,
-  { baseURL: WALLET.BASE_URL },
+  API.WALLET.PAYMENTS,
+  { baseURL: API.WALLET.BASE_URL },
 );
 </script>
 

@@ -18,7 +18,12 @@ export const useZodSchema = () => {
     /**
      * ユーザID
      */
-    userId: z.string().min(1),
+    userId: z.string().min(1, "ユーザIDは必須です。"),
+
+    /**
+     * パスワード
+     */
+    password: z.string().min(1, "パスワードは必須です。"),
 
     /**
      * 年

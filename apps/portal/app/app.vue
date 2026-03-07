@@ -30,8 +30,8 @@ const items = computed<NavigationMenuItem[]>(() => [
   {
     label: "会計",
     icon: "i-tabler-pig-money",
-    to: "/docs/getting-started",
-    active: route.path.startsWith("/docs/getting-started"),
+    to: "/login",
+    active: route.path.startsWith("/login"),
   },
   // {
   //   label: '写真',

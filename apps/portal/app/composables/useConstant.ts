@@ -1,38 +1,75 @@
-import type { RuntimeConfig } from "nuxt/schema";
-
 /**
  * 定数を利用するためのコンポーザブル
  */
 export const useConstant = () => {
-  const config = useRuntimeConfig();
-
   return {
     /**
-     * 会計API
+     * API
      */
-    WALLET: getWalletConfig(config),
+    API: {
+      /**
+       * ポータル
+       */
+      PORTAL: {
+        /**
+         * ベースURL
+         */
+        BASE_URL: "api",
+
+        /**
+         * ログイン
+         */
+        LOGIN: "login",
+      },
+
+      /**
+       * 会計API
+       */
+      WALLET: {
+        /**
+         * ベースURL
+         */
+        BASE_URL: getWalletBaseUrl(),
+
+        /**
+         * 認証
+         */
+        AUTH: {
+          /**
+           * ログイン
+           */
+          LOGIN: "auth/login",
+        },
+
+        /**
+         * 支払い
+         */
+        PAYMENTS: "payments",
+      },
+    },
+
+    /**
+     * Cookie
+     */
+    COOKIE: {
+      /**
+       * 有効期限
+       */
+      MAX_AGE: 60,
+
+      /**
+       * セッション
+       */
+      ACCESS_TOKEN: "accessToken",
+    },
   } as const;
 };
 
 /**
- * 会計APIに関するコンフィグを取得する関数
+ * WalletのベースURLを取得する関数
  */
-const getWalletConfig = (config: RuntimeConfig) => {
+const getWalletBaseUrl = () => {
+  const config = useRuntimeConfig();
   const { SCHEME, FQDN, PORT } = config.public.WALLET;
-  return {
-    /**
-     * ベースURL
-     */
-    BASE_URL: `${SCHEME}://${FQDN}:${PORT}`,
-
-    /**
-     * リソース名
-     */
-    RESOURCE: {
-      /**
-       * 支払い
-       */
-      PAYMENTS: "payments",
-    },
-  };
+  return `${SCHEME}://${FQDN}:${PORT}`;
 };
