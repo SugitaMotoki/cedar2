@@ -22,6 +22,11 @@ export const useConstant = () => {
         LOGIN: "api/login",
 
         /**
+         * ログアウト
+         */
+        LOGOUT: "api/logout",
+
+        /**
          * Wallet
          */
         WALLET: "api/wallet",

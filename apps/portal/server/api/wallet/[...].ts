@@ -1,6 +1,7 @@
 import type { LoginResponse } from "@cedar2/interface";
 import { FetchError } from "ofetch";
 import setTokens from "../utils/set-tokens";
+import type { PortalLogoutResult } from "~~/shared/types/api";
 
 /**
  * /api/wallet
@@ -34,10 +35,28 @@ export default defineEventHandler(async (event) => {
     });
   };
 
+  /**
+   * ログアウト時の処理を実施するヘルパー関数
+   * @returns
+   */
+  const handleLogout = (): PortalLogoutResult => {
+    deleteCookie(event, COOKIE.ACCESS_TOKEN);
+    deleteCookie(event, COOKIE.REFRESH_TOKEN);
+    return {
+      isSuccessed: true,
+    };
+  };
+
   try {
-    // 1回目のリクエスト
     const accessToken = getCookie(event, COOKIE.ACCESS_TOKEN);
-    return await fetchWithAuth(accessToken);
+
+    // 1回目のリクエスト
+    const result = await fetchWithAuth(accessToken);
+    if (proxyPath === "/auth/logout") {
+      return handleLogout();
+    } else {
+      return result;
+    }
   } catch (error: unknown) {
     // 認証エラー以外なら例外を投げて終了
     if (!(error instanceof FetchError) || error.status !== 401) {
@@ -63,10 +82,21 @@ export default defineEventHandler(async (event) => {
       setTokens(event, newAccessToken, newRefreshToken);
 
       // 2回目のリクエスト
-      return await fetchWithAuth(newAccessToken);
+      const result = await fetchWithAuth(newAccessToken);
+      if (proxyPath === "/auth/logout") {
+        return handleLogout();
+      } else {
+        return result;
+      }
     } catch (retryError) {
-      deleteCookie(event, COOKIE.ACCESS_TOKEN);
-      deleteCookie(event, COOKIE.REFRESH_TOKEN);
+      if (retryError instanceof FetchError) {
+        deleteCookie(event, COOKIE.ACCESS_TOKEN);
+        deleteCookie(event, COOKIE.REFRESH_TOKEN);
+        throw createError({
+          status: 401,
+          statusText: retryError.message,
+        });
+      }
       throw retryError;
     }
   }

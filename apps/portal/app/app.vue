@@ -33,6 +33,12 @@ const items = computed<NavigationMenuItem[]>(() => [
     to: "/login",
     active: route.path.startsWith("/login"),
   },
+  {
+    label: "ログアウト",
+    icon: "i-tabler-pig-money",
+    to: "/logout",
+    active: route.path.startsWith("/logout"),
+  },
 ]);
 const isLoginPage = computed(() => route.path.startsWith("/login"));
 </script>

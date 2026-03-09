@@ -33,10 +33,10 @@ export const useUserStore = defineStore("userStore", {
     async fetch() {
       const { API } = useConstant();
       const { $walletFetch } = useNuxtApp();
-      const user = await $walletFetch<GetUserSummaryDto>(
+      const { _data } = await $walletFetch.raw<GetUserSummaryDto>(
         API.WALLET.AUTH.PROFILE,
       );
-      this.dto = user;
+      this.dto = _data ? _data : DEFAULT_DTO;
     },
 
     /**
