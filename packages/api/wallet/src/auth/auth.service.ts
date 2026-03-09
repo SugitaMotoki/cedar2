@@ -1,9 +1,10 @@
+import { AUTH, ENV } from "@/constants";
 import { User } from "@/users/entities/user.entity";
 import { UsersService } from "@/users/users.service";
-import { JwtPayload } from "@cedar2/interface";
+import { JwtPayload, LoginResponse } from "@cedar2/interface";
 import { Injectable } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 import { JwtService } from "@nestjs/jwt";
-import { compare } from "bcrypt";
 
 /**
  * 認証に関するサービス
@@ -12,37 +13,68 @@ import { compare } from "bcrypt";
 export class AuthService {
   /**
    * コンストラクタ
-   * @param usersService ユーザに関するサービス
+   * @param usersService
+   * @param jwtService
+   * @param configService
    */
   constructor(
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
+    private readonly configService: ConfigService,
   ) {}
 
   /**
-   * ユーザを認証するメソッド
-   * @param userId ユーザID
-   * @param password パスワード
-   * @returns 認証成功ならユーザ情報、失敗ならnull
+   * ログインするメソッド
+   * @param user
    */
-  async validateUser(
-    userId: string,
-    password: string,
-  ): Promise<Readonly<User> | null> {
-    const user = await this.usersService.findWithPasswordByIdOrNull(userId);
-    if (!user || !user.password) {
-      return null;
-    }
-    return (await compare(password, user.password)) ? user : null;
+  async login(user: User): Promise<LoginResponse> {
+    const [accessToken, refreshToken] = await Promise.all([
+      // アクセストークンの発行
+      this.createAccessToken(user),
+      // リフレッシュトークンの発行とDBへの格納
+      (async () => {
+        const refreshToken = await this.createRefreshToken(user);
+        await this.usersService.updateRefreshToken(user.id, refreshToken);
+        return refreshToken;
+      })(),
+    ]);
+    return {
+      accessToken,
+      refreshToken,
+    };
   }
 
   /**
-   * ログイン処理を行うメソッド
+   * アクセストークンを発行するメソッド
    * @param user
-   * @returns
+   * @returns アクセストークン
    */
-  login(user: User): string {
+  private createAccessToken(user: User): Promise<string> {
     const payload: JwtPayload = { userId: user.id };
-    return this.jwtService.sign(payload);
+    return this.jwtService.signAsync(payload, {
+      secret: this.configService.get<string>(ENV.WALLET.JWT_SECRET),
+      expiresIn: AUTH.ACCESS_TOKEN_EXPIRES_IN,
+    });
+  }
+
+  /**
+   * リフレッシュトークンを発行するメソッド
+   * @param user
+   * @returns リフレッシュトークン
+   */
+  private createRefreshToken(user: User): Promise<string> {
+    const payload: JwtPayload = { userId: user.id };
+    return this.jwtService.signAsync(payload, {
+      secret: this.configService.get<string>(ENV.WALLET.JWT_REFRESH_SECRET),
+      expiresIn: AUTH.REFRESH_TOKEN_EXPIRES_IN,
+    });
+  }
+
+  /**
+   * ログアウトするメソッド
+   * @param user
+   */
+  async logout(user: User) {
+    await this.usersService.clearRefreshToken(user.id);
   }
 }

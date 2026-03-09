@@ -1,8 +1,8 @@
 import { Strategy } from "passport-local";
 import { PassportStrategy } from "@nestjs/passport";
 import { Injectable, UnauthorizedException } from "@nestjs/common";
-import { AuthService } from "../auth.service";
 import { User } from "@/users/entities/user.entity";
+import { UsersService } from "@/users/users.service";
 
 /**
  * ローカルの認証ストラテジ
@@ -11,9 +11,9 @@ import { User } from "@/users/entities/user.entity";
 export class LocalStrategy extends PassportStrategy(Strategy) {
   /**
    * コンストラクタ
-   * @param authService
+   * @param usersService
    */
-  constructor(private authService: AuthService) {
+  constructor(private readonly usersService: UsersService) {
     super({
       usernameField: "userId",
     });
@@ -26,7 +26,10 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
    * @returns 認証済みのユーザ
    */
   async validate(userId: string, password: string): Promise<User> {
-    const user = await this.authService.validateUser(userId, password);
+    const user = await this.usersService.validateIdAndPasswordOrNull(
+      userId,
+      password,
+    );
     if (!user) {
       throw new UnauthorizedException();
     }

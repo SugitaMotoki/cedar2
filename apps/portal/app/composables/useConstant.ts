@@ -63,14 +63,26 @@ export const useConstant = () => {
      */
     COOKIE: {
       /**
-       * 有効期限
-       */
-      MAX_AGE: 60,
-
-      /**
-       * セッション
+       * アクセストークン
        */
       ACCESS_TOKEN: "accessToken",
+
+      /**
+       * リフレッシュトークン
+       */
+      REFRESH_TOKEN: "refreshToken",
+
+      /**
+       * アクセストークンの有効期限
+       */
+      ACCESS_TOKEN_MAX_AGE: 60 * 1, // 1分
+      // ACCESS_TOKEN_MAX_AGE: 60 * 15, // 15分
+
+      /**
+       * アクセストークンの有効期限
+       */
+      REFRESH_TOKEN_MAX_AGE: 60 * 3, // 3分
+      // REFRESH_TOKEN_MAX_AGE: 60 * 60 * 24 * 365 * 3, // 3年
     },
   } as const;
 };

@@ -21,4 +21,9 @@ export type LoginResponse = {
    * アクセストークン
    */
   accessToken: string;
+
+  /**
+   * リフレッシュトークン
+   */
+  refreshToken: string;
 };

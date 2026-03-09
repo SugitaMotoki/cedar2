@@ -5,6 +5,7 @@ import { AuthGuard } from "@nestjs/passport";
 
 /**
  * JWT認証のためのガード
+ * jwt.strategy.tsを参照
  */
 @Injectable()
 export class JwtAuthGuard extends AuthGuard("jwt") {
@@ -13,11 +14,12 @@ export class JwtAuthGuard extends AuthGuard("jwt") {
   }
 
   canActivate(context: ExecutionContext) {
-    const isPublic = this.reflector.getAllAndOverride<boolean>(
-      AUTH.IS_PUBLIC_KEY,
+    // @IgnoreJwtAuthGuard()がついている場合は処理をスキップする
+    const isIgnore = this.reflector.getAllAndOverride<boolean>(
+      AUTH.IGNORE_JWT_AUTH_GUARD,
       [context.getHandler(), context.getClass()],
     );
-    if (isPublic) {
+    if (isIgnore) {
       return true;
     }
     return super.canActivate(context);

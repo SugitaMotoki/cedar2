@@ -9,7 +9,7 @@ import {
 } from "@nestjs/common";
 import { UsersService } from "./users.service";
 import type { CreateUserDto, UpdateUserDto } from "@cedar2/interface";
-import { Public } from "@/auth/public.decorator";
+import { IgnoreJwtAuthGuard } from "@/auth/ignore-jwt-auth-guard.decorator";
 
 /**
  * ユーザに関するコントローラ
@@ -22,7 +22,7 @@ export class UsersController {
    */
   constructor(private readonly usersService: UsersService) {}
 
-  @Public()
+  @IgnoreJwtAuthGuard()
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);

@@ -37,9 +37,14 @@ export const ENV = {
     PORT: "WALLET_PORT",
 
     /**
-     * JWTのシークレットキー
+     * アクセストークン発行用のJWTシークレットキー
      */
     JWT_SECRET: "WALLET_JWT_SECRET",
+
+    /**
+     * リフレッシュトークン発行用のJWTシークレットキー
+     */
+    JWT_REFRESH_SECRET: "WALLET_JWT_REFRESH_SECRET",
   },
 
   /**
@@ -75,10 +80,17 @@ export const AUTH = {
   /**
    * 公開であることを表すキー
    */
-  IS_PUBLIC_KEY: "isPublic",
+  IGNORE_JWT_AUTH_GUARD: "ignoreJwtAuthGuard",
 
   /**
-   * アクセストークン
+   * アクセストークンの有効期限
    */
-  ACCESS_TOKEN: "access_token",
+  ACCESS_TOKEN_EXPIRES_IN: "1m",
+  // ACCESS_TOKEN_EXPIRES_IN: "15m",
+
+  /**
+   * リフレッシュトークンの有効期限
+   */
+  REFRESH_TOKEN_EXPIRES_IN: "3m",
+  // REFRESH_TOKEN_EXPIRES_IN: "3y",
 } as const;

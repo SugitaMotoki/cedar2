@@ -31,6 +31,15 @@ export class User {
   password: string;
 
   /**
+   * リフレッシュトークン
+   */
+  @Column({
+    nullable: true,
+    select: false,
+  })
+  refreshToken?: string;
+
+  /**
    * 作成日
    */
   @CreateDateColumn({

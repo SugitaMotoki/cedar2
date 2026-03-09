@@ -5,7 +5,7 @@ import { User } from "./entities/user.entity";
 import { Repository } from "typeorm";
 import { UpdateResult } from "typeorm/browser";
 import { DeleteResult } from "typeorm/browser";
-import { genSalt, hash } from "bcrypt";
+import { compareSync, genSalt, hash } from "bcrypt";
 
 /**
  * ユーザに関するサービス
@@ -84,7 +84,7 @@ export class UsersService {
    * @param id ID
    * @returns 指定されたIDのユーザ（なければnull）
    */
-  findWithPasswordByIdOrNull(id: string): Promise<Readonly<User> | null> {
+  findWithSecretByIdOrNull(id: string): Promise<Readonly<User> | null> {
     return this.usersRepository.findOne({
       where: {
         id,
@@ -92,6 +92,7 @@ export class UsersService {
       select: {
         id: true,
         password: true,
+        refreshToken: true,
         createdAt: true,
         updatedAt: true,
       },
@@ -113,11 +114,94 @@ export class UsersService {
   }
 
   /**
+   * リフレッシュトークンをハッシュ化して更新するメソッド
+   * @param id ユーザID
+   * @param refreshToken
+   */
+  async updateRefreshToken(
+    id: string,
+    refreshToken: string,
+  ): Promise<Readonly<UpdateResult>> {
+    const salt = await genSalt();
+    const hashedRefreshToken = await hash(refreshToken, salt);
+    const user = new User({
+      refreshToken: hashedRefreshToken,
+    });
+    return this.usersRepository.update({ id }, user);
+  }
+
+  /**
+   * リフレッシュトークンを削除するメソッド
+   * @param id
+   * @returns
+   */
+  clearRefreshToken(id: string): Promise<Readonly<UpdateResult>> {
+    const user = new User({
+      refreshToken: undefined,
+    });
+    return this.usersRepository.update({ id }, user);
+  }
+
+  /**
    * 指定されたIDのユーザを削除するメソッド
    * @param id ID
    * @returns 削除結果
    */
   remove(id: string): Promise<Readonly<DeleteResult>> {
     return this.usersRepository.delete({ id });
+  }
+
+  /**
+   * ユーザのIDとPWを認証するメソッド
+   * @param id
+   * @param password
+   * @returns 認証に成功したらユーザ、失敗したらnull
+   */
+  async validateIdAndPasswordOrNull(
+    id: string,
+    password: string,
+  ): Promise<Readonly<User> | null> {
+    const user = await this.usersRepository.findOne({
+      where: {
+        id,
+      },
+      select: {
+        id: true,
+        password: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
+    if (!user || !user.password) {
+      return null;
+    }
+    return compareSync(password, user.password) ? user : null;
+  }
+
+  /**
+   * ユーザのリフレッシュトークンを認証するメソッド
+   * @param id
+   * @param password
+   * @returns 認証に成功したらユーザ、失敗したらnull
+   */
+  async validateRefreshTokenOrNull(
+    id: string,
+    refreshToken: string,
+  ): Promise<Readonly<User> | null> {
+    const user = await this.usersRepository.findOne({
+      where: {
+        id,
+      },
+      select: {
+        id: true,
+        refreshToken: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
+    if (!user || !user.refreshToken) {
+      return null;
+    }
+    return compareSync(refreshToken, user.refreshToken) ? user : null;
   }
 }
