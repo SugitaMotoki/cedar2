@@ -8,7 +8,6 @@ const onClick = async () => {
       method: "POST",
     },
   );
-  console.log(result);
   if (result.isSuccessed) {
     navigateTo("/login");
   }

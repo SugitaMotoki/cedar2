@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import * as z from "zod";
 import type { FormSubmitEvent } from "@nuxt/ui";
+import type { LoginRequest } from "@cedar2/interface";
 
 // 定数
 const commonSchema = useZodSchema();
-const { login } = useUserStore();
+const { API } = useConstant();
 
 // フォームのスキーマ
 const formSchema = z.object({
@@ -19,9 +20,14 @@ const isActiveAlert = ref(false);
  * ボタン押下時の処理
  */
 const onSubmit = async (event: FormSubmitEvent<FormSchema>) => {
-  const result = await login({
+  const body: LoginRequest = {
     userId: event.data.userId,
     password: event.data.password,
+  };
+  const result = await $fetch<PortalLoginResult>(API.PORTAL.LOGIN, {
+    baseURL: API.PORTAL.BASE_URL,
+    method: "POST",
+    body,
   });
   if (result.isSuccessed) {
     navigateTo("/");
