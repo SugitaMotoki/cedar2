@@ -4,7 +4,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "id": "太郎",
+  "id": "taro",
   "password": "taro"
 }
 
@@ -14,7 +14,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "id": "花子",
+  "id": "hanako",
   "password": "hanako"
 }
 
@@ -24,7 +24,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "id": "健",
+  "id": "ken",
   "password": "ken"
 }
 
@@ -35,16 +35,16 @@ Accept: application/json
 
 {
   "name": "神奈川県民",
-  "userNo": 1
+  "createdBy": "taro"
 }
 
-### グループ1メンバ1追加
+### グループ1メンバ2追加
 POST http://localhost:4000/groups/1/members
 Content-Type: application/json
 Accept: application/json
 
 {
-  "userNo": 2
+  "userId": "hanako"
 }
 
 ### グループ2作成
@@ -54,7 +54,7 @@ Accept: application/json
 
 {
   "name": "ゴルフ部",
-  "userNo": 1
+  "userId": "taro"
 }
 
 ### グループ2メンバ2追加
@@ -63,7 +63,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "userNo": 2
+  "userId": "hanako"
 }
 
 ### カテゴリ1追加
@@ -109,14 +109,14 @@ Accept: application/json
   "amount": 2000,
   "isIncome": false,
   "categoryId": 2,
-  "userNoOfcreatedBy": 1,
+  "createdBy": "taro",
   "allocations": [
-    { "userNo": 1, "amount": 1000 },
-    { "userNo": 2, "amount": 1000 }
+    { "userId": "taro", "amount": 1000 },
+    { "userId": "hanako", "amount": 1000 }
   ],
   "actuals": [
-    { "userNo": 1, "amount": 2000 },
-    { "userNo": 2, "amount": 0 }
+    { "userId": "taro", "amount": 2000 },
+    { "userId": "hanako", "amount": 0 }
   ]
 }
 
@@ -133,14 +133,14 @@ Accept: application/json
   "amount": 4000,
   "isIncome": false,
   "categoryId": 2,
-  "userNoOfcreatedBy": 1,
+  "createdBy": "taro",
   "allocations": [
-    { "userNo": 1, "amount": 2000 },
-    { "userNo": 2, "amount": 2000 }
+    { "userId": "taro", "amount": 2000 },
+    { "userId": "hanako", "amount": 2000 }
   ],
   "actuals": [
-    { "userNo": 1, "amount": 0 },
-    { "userNo": 2, "amount": 4000 }
+    { "userId": "taro", "amount": 0 },
+    { "userId": "hanako", "amount": 4000 }
   ]
 }
 
@@ -157,14 +157,14 @@ Accept: application/json
   "amount": 3000,
   "isIncome": false,
   "categoryId": 2,
-  "userNoOfcreatedBy": 1,
+  "createdBy": "taro",
   "allocations": [
-    { "userNo": 1, "amount": 1500 },
-    { "userNo": 2, "amount": 1500 }
+    { "userId": "taro", "amount": 1500 },
+    { "userId": "hanako", "amount": 1500 }
   ],
   "actuals": [
-    { "userNo": 1, "amount": 3000 },
-    { "userNo": 2, "amount": 0 }
+    { "userId": "taro", "amount": 3000 },
+    { "userId": "hanako", "amount": 0 }
   ]
 }
 
@@ -174,8 +174,8 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "from": 1,
-  "to": 2,
+  "from": "taro",
+  "to": "hanako",
   "amount": 1000,
   "note": "",
   "payments": [1, 2]

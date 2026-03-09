@@ -35,6 +35,16 @@ export const ENV = {
      * ポート
      */
     PORT: "WALLET_PORT",
+
+    /**
+     * アクセストークン発行用のJWTシークレットキー
+     */
+    JWT_SECRET: "WALLET_JWT_SECRET",
+
+    /**
+     * リフレッシュトークン発行用のJWTシークレットキー
+     */
+    JWT_REFRESH_SECRET: "WALLET_JWT_REFRESH_SECRET",
   },
 
   /**
@@ -60,5 +70,45 @@ export const ENV = {
      * ポート
      */
     PORT: "DB_PORT",
+  },
+} as const;
+
+/**
+ * 認証関連の定数
+ */
+export const AUTH = {
+  /**
+   * 公開であることを表すキー
+   */
+  IGNORE_JWT_AUTH_GUARD: "ignoreJwtAuthGuard",
+
+  /**
+   * アクセストークンの有効期限
+   */
+  ACCESS_TOKEN_EXPIRES_IN: "15m",
+
+  /**
+   * リフレッシュトークンの有効期限
+   */
+  REFRESH_TOKEN_EXPIRES_IN: "3y",
+
+  /**
+   * Passport.jsのストラテジ名
+   */
+  PASSPORT_STRATEGY: {
+    /**
+     * ローカル
+     */
+    LOCAL: "local",
+
+    /**
+     * JWT
+     */
+    JWT: "jwt",
+
+    /**
+     * JWTリフレッシュ
+     */
+    JWT_REFRESH: "jwt-refresh",
   },
 } as const;

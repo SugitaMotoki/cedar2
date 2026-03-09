@@ -8,8 +8,7 @@ import {
   Delete,
 } from "@nestjs/common";
 import { PresetsService } from "./presets.service";
-import { CreatePresetDto } from "./dto/create-preset.dto";
-import { UpdatePresetDto } from "./dto/update-preset.dto";
+import type { CreatePresetDto, UpdatePresetDto } from "@cedar2/interface";
 
 @Controller("presets")
 export class PresetsController {

@@ -4,6 +4,8 @@
   "description": "杉の木システム",
   "main": "index.js",
   "scripts": {
+    "portal": "pnpm -F '@cedar2/portal'",
+    "interface": "pnpm -F '@cedar2/interface'",
     "api:wallet": "pnpm -F '@cedar2/wallet'",
     "type-check": "turbo type-check",
     "lint": "turbo lint",
@@ -14,9 +16,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "packageManager": "pnpm@10.24.0",
+  "packageManager": "pnpm@10.30.3",
   "engines": {
-    "pnpm": ">=10.24.0",
+    "pnpm": ">=10.25.0",
     "npm": "Use pnpm!",
     "yarn": "Use pnpm!"
   },

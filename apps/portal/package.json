@@ -1,0 +1,35 @@
+{
+  "name": "@cedar2/portal",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "type-check": "nuxt typecheck",
+    "lint": "eslint . --fix",
+    "format": "",
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@cedar2/interface": "workspace:*",
+    "@iconify-json/lucide": "^1.2.74",
+    "@iconify-json/simple-icons": "^1.2.59",
+    "@nuxt/ui": "^4.2.1",
+    "@pinia/nuxt": "^0.11.3",
+    "nuxt": "^4.2.1",
+    "pinia": "^3.0.4",
+    "tailwindcss": "^4.1.17",
+    "zod": "^4.1.13"
+  },
+  "devDependencies": {
+    "@nuxt/eslint": "^1.10.0",
+    "eslint": "^9.39.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "prettier": "^3.7.2",
+    "typescript": "^5.9.3",
+    "vue-tsc": "^3.1.5"
+  },
+  "packageManager": "pnpm@10.23.0"
+}

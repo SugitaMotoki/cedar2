@@ -1,6 +1,8 @@
 import { Injectable } from "@nestjs/common";
-import { CreateSettlementDto } from "./dto/create-settlement.dto";
-import { UpdateSettlementDto } from "./dto/update-settlement.dto";
+import type {
+  CreateSettlementDto,
+  UpdateSettlementDto,
+} from "@cedar2/interface";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Settlement } from "./entities/settlement.entity";
 import { Repository } from "typeorm";
@@ -35,8 +37,8 @@ export class SettlementsService {
     payments,
   }: CreateSettlementDto): Promise<Readonly<Settlement>> {
     const settlement = new Settlement({
-      from: new User({ no: from }),
-      to: new User({ no: to }),
+      from: new User({ id: from }),
+      to: new User({ id: to }),
       amount,
       note,
       payments: payments.map((id) => new Payment({ id })),
@@ -86,8 +88,8 @@ export class SettlementsService {
     { from, to, amount, note, payments }: UpdateSettlementDto,
   ) {
     const settlement = new Settlement({
-      from: from !== undefined ? new User({ no: from }) : undefined,
-      to: to !== undefined ? new User({ no: to }) : undefined,
+      from: from !== undefined ? new User({ id: from }) : undefined,
+      to: to !== undefined ? new User({ id: to }) : undefined,
       amount,
       note,
       payments: payments?.map((id) => new Payment({ id })),

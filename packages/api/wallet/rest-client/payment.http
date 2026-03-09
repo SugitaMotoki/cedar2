@@ -19,14 +19,14 @@ Accept: application/json
   "amount": 4000,
   "isIncome": false,
   "categoryId": 2,
-  "userNoOfcreatedBy": 1,
+  "createdBy": "1",
   "allocations": [
-    { "userNo": 1, "amount": 2000 },
-    { "userNo": 2, "amount": 2000 }
+    { "userId": "1", "amount": 2000 },
+    { "userId": "2", "amount": 2000 }
   ],
   "actuals": [
-    { "userNo": 1, "amount": 0 },
-    { "userNo": 2, "amount": 4000 }
+    { "userId": "1", "amount": 0 },
+    { "userId": "2", "amount": 4000 }
   ]
 }
 

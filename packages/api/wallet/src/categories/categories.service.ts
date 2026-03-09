@@ -1,6 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { CreateCategoryDto } from "./dto/create-category.dto";
-import { UpdateCategoryDto } from "./dto/update-category.dto";
+import type { CreateCategoryDto, UpdateCategoryDto } from "@cedar2/interface";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Category } from "./entities/category.entity";
 import { TreeRepository } from "typeorm";

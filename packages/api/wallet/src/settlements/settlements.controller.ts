@@ -8,8 +8,10 @@ import {
   Delete,
 } from "@nestjs/common";
 import { SettlementsService } from "./settlements.service";
-import { CreateSettlementDto } from "./dto/create-settlement.dto";
-import { UpdateSettlementDto } from "./dto/update-settlement.dto";
+import type {
+  CreateSettlementDto,
+  UpdateSettlementDto,
+} from "@cedar2/interface";
 
 /**
  * 精算に関するコントローラ

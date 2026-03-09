@@ -8,9 +8,11 @@ import {
   Delete,
 } from "@nestjs/common";
 import { GroupsService } from "./groups.service";
-import { CreateGroupDto } from "./dto/create-group.dto";
-import { UpdateGroupDto } from "./dto/update-group.dto";
-import { AddMemberDto } from "./dto/add-member.dto";
+import type {
+  CreateGroupDto,
+  UpdateGroupDto,
+  CreateMemberDto,
+} from "@cedar2/interface";
 
 /**
  * グループに関するコントローラ
@@ -50,9 +52,12 @@ export class GroupsController {
   @Post(":groupId/members")
   addMember(
     @Param("groupId") groupId: string,
-    @Body() addMemberDto: AddMemberDto,
+    @Body() createMemberDto: CreateMemberDto,
   ) {
-    return this.groupsService.addMemberToGroup(+groupId, addMemberDto.userNo);
+    return this.groupsService.addMemberToGroup(
+      +groupId,
+      createMemberDto.userId,
+    );
   }
 
   @Get(":groupId/members")

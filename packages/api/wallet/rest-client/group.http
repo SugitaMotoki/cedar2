@@ -13,7 +13,7 @@ Accept: application/json
 
 {
   "name": "グループ",
-  "userNo": 1
+  "userId": "1"
 }
 
 ## メンバ
@@ -27,5 +27,5 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "userNo": 1
+  "userId": "1"
 }

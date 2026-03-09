@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
-import { ConfigModule } from "@nestjs/config";
+import { ConfigModule, ConfigService } from "@nestjs/config";
 import { join } from "path";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ENV } from "./constants";
@@ -11,6 +11,7 @@ import { GroupsModule } from "./groups/groups.module";
 import { PaymentsModule } from "./payments/payments.module";
 import { SettlementsModule } from "./settlements/settlements.module";
 import { PresetsModule } from "./presets/presets.module";
+import { AuthModule } from "./auth/auth.module";
 
 @Module({
   imports: [
@@ -21,15 +22,18 @@ import { PresetsModule } from "./presets/presets.module";
       ],
       isGlobal: true,
     }),
-    TypeOrmModule.forRoot({
-      type: "postgres",
-      host: process.env[ENV.COMMON.HOSTNAME],
-      port: Number(process.env[ENV.DB.PORT]),
-      username: process.env[ENV.DB.USER],
-      password: process.env[ENV.DB.PASSWORD],
-      database: process.env[ENV.DB.NAME],
-      autoLoadEntities: true,
-      synchronize: true, // TODO: 本番環境ではfalseにする
+    TypeOrmModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        type: "postgres",
+        host: config.get<string>(ENV.COMMON.HOSTNAME),
+        port: config.get<number>(ENV.DB.PORT),
+        username: config.get<string>(ENV.DB.USER),
+        password: config.get<string>(ENV.DB.PASSWORD),
+        database: config.get<string>(ENV.DB.NAME),
+        autoLoadEntities: true,
+        synchronize: true, // TODO: 本番環境ではfalseにする
+      }),
     }),
     UsersModule,
     CategoriesModule,
@@ -37,6 +41,7 @@ import { PresetsModule } from "./presets/presets.module";
     PaymentsModule,
     SettlementsModule,
     PresetsModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,6 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { CreateGroupDto } from "./dto/create-group.dto";
-import { UpdateGroupDto } from "./dto/update-group.dto";
+import type { CreateGroupDto, UpdateGroupDto } from "@cedar2/interface";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Group } from "./entities/group.entity";
 import { Repository } from "typeorm";
@@ -30,14 +29,14 @@ export class GroupsService {
    */
   async createGroup({
     name,
-    userNo,
+    createdBy,
   }: CreateGroupDto): Promise<Readonly<Group>> {
     const group = new Group({
       name,
-      createdBy: new User({ no: userNo }),
+      createdBy: new User({ id: createdBy }),
     });
     await this.groupsRepository.save(group);
-    await this.addMemberToGroup(group.id, group.createdBy.no);
+    await this.addMemberToGroup(group.id, group.createdBy.id);
     return group;
   }
 
@@ -95,13 +94,13 @@ export class GroupsService {
   /**
    * グループにメンバを追加するメソッド
    * @param groupId グループID
-   * @param userNo ユーザの通し番号
+   * @param userId ユーザID
    * @returns 追加したグループメンバ
    */
-  async addMemberToGroup(groupId: number, userNo: number) {
+  async addMemberToGroup(groupId: number, userId: string) {
     const groupMember = new GroupMember({
       group: new Group({ id: groupId }),
-      member: new User({ no: userNo }),
+      member: new User({ id: userId }),
     });
     await this.groupMembersRepository.save(groupMember);
     return groupMember;

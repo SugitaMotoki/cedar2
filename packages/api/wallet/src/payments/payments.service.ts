@@ -1,6 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { CreatePaymentDto } from "./dto/create-payment.dto";
-import { UpdatePaymentDto } from "./dto/update-payment.dto";
+import type { CreatePaymentDto, UpdatePaymentDto } from "@cedar2/interface";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Payment } from "./entities/payment.entity";
 import { Repository } from "typeorm";
@@ -42,7 +41,7 @@ export class PaymentsService {
     amount,
     isIncome,
     categoryId,
-    userNoOfcreatedBy,
+    createdBy,
     allocations,
     actuals,
   }: CreatePaymentDto): Promise<Readonly<Payment>> {
@@ -56,17 +55,17 @@ export class PaymentsService {
       isSettled: false,
       orderKey: 0,
       category: new Category({ id: categoryId }),
-      createdBy: new User({ no: userNoOfcreatedBy }),
+      createdBy: new User({ id: createdBy }),
     });
     await this.paymentsRepository.save(payment);
 
     // 支払い割り当て
-    for (const { userNo, amount } of allocations) {
-      await this.addAllocationToPayment(payment.id, userNo, amount);
+    for (const { userId, amount } of allocations) {
+      await this.addAllocationToPayment(payment.id, userId, amount);
     }
     // 実際の支払い
-    for (const { userNo, amount } of actuals) {
-      await this.addActualToPayment(payment.id, userNo, amount);
+    for (const { userId, amount } of actuals) {
+      await this.addActualToPayment(payment.id, userId, amount);
     }
 
     return payment;
@@ -140,18 +139,18 @@ export class PaymentsService {
   /**
    * 支払い割り当てを追加するメソッド
    * @param paymentId 支払いID
-   * @param userNo ユーザの通し番号
+   * @param userId ユーザID
    * @param amount 金額
    * @returns 追加した支払い割り当て
    */
   async addAllocationToPayment(
     paymentId: number,
-    userNo: number,
+    userId: string,
     amount: number,
   ): Promise<Readonly<PaymentAllocation>> {
     const allocation = new PaymentAllocation({
       payment: new Payment({ id: paymentId }),
-      user: new User({ no: userNo }),
+      user: new User({ id: userId }),
       amount,
     });
     await this.paymentAllocationsRepository.save(allocation);
@@ -181,18 +180,18 @@ export class PaymentsService {
   /**
    * 実際の支払いを追加するメソッド
    * @param paymentId 支払いID
-   * @param userNo ユーザの通し番号
+   * @param userId ユーザID
    * @param amount 金額
    * @returns 追加した実際の支払い
    */
   async addActualToPayment(
     paymentId: number,
-    userNo: number,
+    userId: string,
     amount: number,
   ): Promise<Readonly<PaymentActual>> {
     const actual = new PaymentActual({
       payment: new Payment({ id: paymentId }),
-      user: new User({ no: userNo }),
+      user: new User({ id: userId }),
       amount,
     });
     await this.paymentActualsRepository.save(actual);
