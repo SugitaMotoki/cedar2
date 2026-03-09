@@ -8,7 +8,7 @@ import { AuthGuard } from "@nestjs/passport";
  * jwt.strategy.tsを参照
  */
 @Injectable()
-export class JwtAuthGuard extends AuthGuard("jwt") {
+export class JwtAuthGuard extends AuthGuard(AUTH.PASSPORT_STRATEGY.JWT) {
   constructor(private reflector: Reflector) {
     super();
   }

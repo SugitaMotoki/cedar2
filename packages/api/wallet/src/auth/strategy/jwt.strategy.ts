@@ -2,7 +2,7 @@ import { ExtractJwt, Strategy } from "passport-jwt";
 import { PassportStrategy } from "@nestjs/passport";
 import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { ENV } from "@/constants";
+import { AUTH, ENV } from "@/constants";
 import { JwtPayload } from "@cedar2/interface";
 import { User } from "@/users/entities/user.entity";
 import { UsersService } from "@/users/users.service";
@@ -11,7 +11,10 @@ import { UsersService } from "@/users/users.service";
  * JWTの認証ストラテジ
  */
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy) {
+export class JwtStrategy extends PassportStrategy(
+  Strategy,
+  AUTH.PASSPORT_STRATEGY.JWT,
+) {
   /**
    * コンストラクタ
    * @param configService

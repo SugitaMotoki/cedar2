@@ -85,12 +85,30 @@ export const AUTH = {
   /**
    * アクセストークンの有効期限
    */
-  ACCESS_TOKEN_EXPIRES_IN: "1m",
-  // ACCESS_TOKEN_EXPIRES_IN: "15m",
+  ACCESS_TOKEN_EXPIRES_IN: "15m",
 
   /**
    * リフレッシュトークンの有効期限
    */
-  REFRESH_TOKEN_EXPIRES_IN: "3m",
-  // REFRESH_TOKEN_EXPIRES_IN: "3y",
+  REFRESH_TOKEN_EXPIRES_IN: "3y",
+
+  /**
+   * Passport.jsのストラテジ名
+   */
+  PASSPORT_STRATEGY: {
+    /**
+     * ローカル
+     */
+    LOCAL: "local",
+
+    /**
+     * JWT
+     */
+    JWT: "jwt",
+
+    /**
+     * JWTリフレッシュ
+     */
+    JWT_REFRESH: "jwt-refresh",
+  },
 } as const;
