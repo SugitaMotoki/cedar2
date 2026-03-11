@@ -9,7 +9,7 @@ import {
 } from "@nestjs/common";
 import { UsersService } from "./users.service";
 import type { CreateUserDto, UpdateUserProfileDto } from "@cedar2/interface";
-import { IgnoreJwtAuthGuard } from "@/auth/ignore-jwt-auth-guard.decorator";
+import { IgnoreJwtAuthGuard } from "@/auth/decorators/ignore-jwt-auth-guard.decorator";
 
 /**
  * ユーザに関するコントローラ
