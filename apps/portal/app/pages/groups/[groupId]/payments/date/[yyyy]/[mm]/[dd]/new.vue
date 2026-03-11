@@ -36,18 +36,7 @@ const dd = ref(data.dd);
           :group-id="1"
           :payment-date="'2026-01-01'"
           :created-by="'taro'"
-          :users="[
-            {
-              id: 'user01',
-              createdAt: '',
-              updatedAt: '',
-            },
-            {
-              id: 'user02',
-              createdAt: '',
-              updatedAt: '',
-            },
-          ]"
+          :users="[]"
         />
       </UContainer>
     </UPageBody>

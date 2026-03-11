@@ -1,5 +1,7 @@
+import { GetUserProfileDto } from "./get_user_profile";
+
 /**
- * ユーザ概要取得用DTO
+ * ユーザ取得用DTO
  */
 export interface GetUserSummaryDto {
   /**
@@ -16,4 +18,9 @@ export interface GetUserSummaryDto {
    * 更新日
    */
   updatedAt: string;
+
+  /**
+   * プロフィール
+   */
+  profile: GetUserProfileDto;
 }

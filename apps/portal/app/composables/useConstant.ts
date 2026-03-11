@@ -70,6 +70,16 @@ export const useConstant = () => {
          * 支払い
          */
         PAYMENTS: "payments",
+
+        /**
+         * ユーザ
+         */
+        USERS: "users",
+
+        /**
+         * グループ
+         */
+        GROUPS: "groups",
       },
     },
 

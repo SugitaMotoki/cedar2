@@ -6,10 +6,13 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   OneToMany,
+  OneToOne,
   PrimaryColumn,
   UpdateDateColumn,
 } from "typeorm";
+import { UserProfile } from "./user-profile.entity";
 
 /**
  * ユーザを表すエンティティ
@@ -38,6 +41,15 @@ export class User {
     select: false,
   })
   refreshToken?: string;
+
+  /**
+   * プロフィール
+   */
+  @OneToOne(() => UserProfile, (profile) => profile.user, {
+    cascade: ["insert"],
+  })
+  @JoinColumn()
+  profile: Relation<UserProfile>;
 
   /**
    * 作成日

@@ -1,11 +1,12 @@
 import { Injectable } from "@nestjs/common";
-import type { CreateUserDto, UpdateUserDto } from "@cedar2/interface";
+import type { CreateUserDto, UpdateUserProfileDto } from "@cedar2/interface";
 import { InjectRepository } from "@nestjs/typeorm";
 import { User } from "./entities/user.entity";
 import { Repository } from "typeorm";
 import { UpdateResult } from "typeorm/browser";
 import { DeleteResult } from "typeorm/browser";
 import { compareSync, genSalt, hash } from "bcrypt";
+import { UserProfile } from "./entities/user-profile.entity";
 
 /**
  * ユーザに関するサービス
@@ -19,6 +20,8 @@ export class UsersService {
   constructor(
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
+    @InjectRepository(UserProfile)
+    private readonly userProfilesRepository: Repository<UserProfile>,
   ) {}
 
   /**
@@ -31,6 +34,10 @@ export class UsersService {
     const user = new User({
       id,
       password: await hash(password, salt),
+      profile: new UserProfile({
+        id, // プロフィールのIDはユーザのIDと同一
+        displayName: id, // 表示名も初期値はID
+      }),
     });
     await this.usersRepository.save(user);
     user.password = "The password has been hidden.";
@@ -45,6 +52,9 @@ export class UsersService {
     return this.usersRepository.find({
       order: {
         createdAt: "ASC",
+      },
+      relations: {
+        profile: true,
       },
     });
   }
@@ -63,6 +73,9 @@ export class UsersService {
           },
         },
       },
+      relations: {
+        profile: true,
+      },
     });
   }
 
@@ -76,41 +89,24 @@ export class UsersService {
       where: {
         id,
       },
-    });
-  }
-
-  /**
-   * 指定されたIDのユーザをパスワード付きで取得するメソッド
-   * @param id ID
-   * @returns 指定されたIDのユーザ（なければnull）
-   */
-  findWithSecretByIdOrNull(id: string): Promise<Readonly<User> | null> {
-    return this.usersRepository.findOne({
-      where: {
-        id,
-      },
-      select: {
-        id: true,
-        password: true,
-        refreshToken: true,
-        createdAt: true,
-        updatedAt: true,
+      relations: {
+        profile: true,
       },
     });
   }
 
   /**
-   * 指定されたIDのユーザを更新するメソッド
+   * 指定されたIDのユーザプロフィールを更新するメソッド
    * @param id ID
-   * @param updateUserDto
+   * @param updateProfileDto
    * @returns 更新結果
    */
-  update(
+  updateProfile(
     id: string,
-    updateUserDto: UpdateUserDto,
+    updateProfileDto: UpdateUserProfileDto,
   ): Promise<Readonly<UpdateResult>> {
-    const user = new User({ ...updateUserDto });
-    return this.usersRepository.update({ id }, user);
+    const profile = new UserProfile({ ...updateProfileDto });
+    return this.userProfilesRepository.update({ id }, profile);
   }
 
   /**

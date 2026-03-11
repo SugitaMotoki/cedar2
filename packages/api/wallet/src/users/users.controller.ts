@@ -8,7 +8,7 @@ import {
   Delete,
 } from "@nestjs/common";
 import { UsersService } from "./users.service";
-import type { CreateUserDto, UpdateUserDto } from "@cedar2/interface";
+import type { CreateUserDto, UpdateUserProfileDto } from "@cedar2/interface";
 import { IgnoreJwtAuthGuard } from "@/auth/ignore-jwt-auth-guard.decorator";
 
 /**
@@ -39,8 +39,11 @@ export class UsersController {
   }
 
   @Patch(":id")
-  update(@Param("id") id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(id, updateUserDto);
+  update(
+    @Param("id") id: string,
+    @Body() updateProfileDto: UpdateUserProfileDto,
+  ) {
+    return this.usersService.updateProfile(id, updateProfileDto);
   }
 
   @Delete(":id")
