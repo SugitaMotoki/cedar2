@@ -80,6 +80,11 @@ export const useConstant = () => {
          * グループ
          */
         GROUPS: "groups",
+
+        /**
+         * カテゴリ
+         */
+        CATEGORIES: "categories",
       },
     },
 

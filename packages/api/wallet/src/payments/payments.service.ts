@@ -85,6 +85,23 @@ export class PaymentsService {
   }
 
   /**
+   * 指定されたグループの支払いを取得するメソッド
+   */
+  findPaymentsByGroupId(groupId: number): Promise<Readonly<Payment[]>> {
+    return this.paymentsRepository.find({
+      where: {
+        group: {
+          id: groupId,
+        },
+      },
+      order: {
+        orderKey: "ASC",
+        createdAt: "ASC",
+      },
+    });
+  }
+
+  /**
    * 指定されたIDの支払いを取得するメソッド
    * @param id
    * @returns 指定されたIDの支払い（なければエラー）

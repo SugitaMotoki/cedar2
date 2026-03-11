@@ -3,7 +3,7 @@ const { API } = useConstant();
 const { $walletFetch } = useNuxtApp();
 
 const onClick = async () => {
-  await $walletFetch<string>(`${API.WALLET.USERS}`, {
+  await $walletFetch(`${API.WALLET.USERS}`, {
     method: "POST",
     body: {
       id: "hanako",
@@ -13,7 +13,7 @@ const onClick = async () => {
       console.log(`${request}: ${response.ok}`);
     },
   });
-  await $walletFetch<string>(`${API.WALLET.USERS}`, {
+  await $walletFetch(`${API.WALLET.USERS}`, {
     method: "POST",
     body: {
       id: "ken",
@@ -23,7 +23,7 @@ const onClick = async () => {
       console.log(`${request}: ${response.ok}`);
     },
   });
-  await $walletFetch<string>(`${API.WALLET.USERS}/taro`, {
+  await $walletFetch(`${API.WALLET.USERS}/taro`, {
     method: "PATCH",
     body: {
       displayName: "太郎",
@@ -36,7 +36,7 @@ const onClick = async () => {
       console.log(`${request}: ${response.ok}`);
     },
   });
-  await $walletFetch<string>(`${API.WALLET.USERS}/hanako`, {
+  await $walletFetch(`${API.WALLET.USERS}/hanako`, {
     method: "PATCH",
     body: {
       displayName: "花子",
@@ -49,7 +49,7 @@ const onClick = async () => {
       console.log(`${request}: ${response.ok}`);
     },
   });
-  await $walletFetch<string>(`${API.WALLET.USERS}/ken`, {
+  await $walletFetch(`${API.WALLET.USERS}/ken`, {
     method: "PATCH",
     body: {
       displayName: "健",
@@ -62,7 +62,7 @@ const onClick = async () => {
       console.log(`${request}: ${response.ok}`);
     },
   });
-  await $walletFetch<string>(`${API.WALLET.GROUPS}`, {
+  await $walletFetch(`${API.WALLET.GROUPS}`, {
     method: "POST",
     body: {
       name: "神奈川県民",
@@ -72,7 +72,7 @@ const onClick = async () => {
       console.log(`${request}: ${response.ok}`);
     },
   });
-  await $walletFetch<string>(`${API.WALLET.GROUPS}/1/members`, {
+  await $walletFetch(`${API.WALLET.GROUPS}/1/members`, {
     method: "POST",
     body: {
       userId: "hanako",
@@ -81,7 +81,7 @@ const onClick = async () => {
       console.log(`${request}: ${response.ok}`);
     },
   });
-  await $walletFetch<string>(`${API.WALLET.GROUPS}`, {
+  await $walletFetch(`${API.WALLET.GROUPS}`, {
     method: "POST",
     body: {
       name: "ゴルフ部",
@@ -91,10 +91,112 @@ const onClick = async () => {
       console.log(`${request}: ${response.ok}`);
     },
   });
-  await $walletFetch<string>(`${API.WALLET.GROUPS}/2/members`, {
+  await $walletFetch(`${API.WALLET.GROUPS}/2/members`, {
     method: "POST",
     body: {
       userId: "hanako",
+    },
+    onResponse: ({ request, response }) => {
+      console.log(`${request}: ${response.ok}`);
+    },
+  });
+  await $walletFetch(`${API.WALLET.CATEGORIES}`, {
+    method: "POST",
+    body: {
+      name: "食費",
+      parentId: null,
+    },
+    onResponse: ({ request, response }) => {
+      console.log(`${request}: ${response.ok}`);
+    },
+  });
+  await $walletFetch(`${API.WALLET.CATEGORIES}`, {
+    method: "POST",
+    body: {
+      name: "食材",
+      parentId: 1,
+    },
+    onResponse: ({ request, response }) => {
+      console.log(`${request}: ${response.ok}`);
+    },
+  });
+  await $walletFetch(`${API.WALLET.CATEGORIES}`, {
+    method: "POST",
+    body: {
+      name: "外食",
+      parentId: 1,
+    },
+    onResponse: ({ request, response }) => {
+      console.log(`${request}: ${response.ok}`);
+    },
+  });
+  await $walletFetch(`${API.WALLET.PAYMENTS}`, {
+    method: "POST",
+    body: {
+      groupId: 1,
+      title: "東急ストア",
+      note: "夜ご飯など",
+      paymentDate: "2025-12-01",
+      amount: 2000,
+      isIncome: false,
+      categoryId: 2,
+      createdBy: "taro",
+      allocations: [
+        { userId: "taro", amount: 1000 },
+        { userId: "hanako", amount: 1000 },
+      ],
+      actuals: [
+        { userId: "taro", amount: 2000 },
+        { userId: "hanako", amount: 0 },
+      ],
+    },
+    onResponse: ({ request, response }) => {
+      console.log(`${request}: ${response.ok}`);
+    },
+  });
+  await $walletFetch(`${API.WALLET.PAYMENTS}`, {
+    method: "POST",
+    body: {
+      groupId: 1,
+      title: "東急ストア",
+      note: "昼ごはんなど",
+      paymentDate: "2025-12-02",
+      amount: 4000,
+      isIncome: false,
+      categoryId: 2,
+      createdBy: "taro",
+      allocations: [
+        { userId: "taro", amount: 2000 },
+        { userId: "hanako", amount: 2000 },
+      ],
+      actuals: [
+        { userId: "taro", amount: 0 },
+        { userId: "hanako", amount: 4000 },
+      ],
+    },
+    onResponse: ({ request, response }) => {
+      console.log(`${request}: ${response.ok}`);
+    },
+  });
+  await $walletFetch(`${API.WALLET.PAYMENTS}`, {
+    method: "POST",
+    body: {
+      groupId: 1,
+      title: "イオン",
+      note: "色々",
+      paymentDate: "2025-12-03",
+      amount: 3000,
+      isIncome: false,
+      categoryId: 2,
+      createdBy: "taro",
+      allocations: [
+        { userId: "taro", amount: 1500 },
+        { userId: "hanako", amount: 1500 },
+      ],
+      actuals: [
+        { userId: "taro", amount: 3000 },
+        { userId: "hanako", amount: 0 },
+      ],
     },
     onResponse: ({ request, response }) => {
       console.log(`${request}: ${response.ok}`);

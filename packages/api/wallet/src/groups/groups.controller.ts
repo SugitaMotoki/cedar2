@@ -16,11 +16,13 @@ import type {
 } from "@cedar2/interface";
 import type { Request } from "express";
 import { User } from "@/users/entities/user.entity";
+import { CheckGroupMember } from "./decorators/check-group-member.decorator";
 
 /**
  * グループに関するコントローラ
  */
 @Controller("groups")
+@CheckGroupMember()
 export class GroupsController {
   constructor(private readonly groupsService: GroupsService) {}
 

@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from "@nestjs/common";
 import { PaymentsService } from "./payments.service";
 import type {
@@ -16,6 +17,9 @@ import type {
   CreateActualDto,
   UpdateActualDto,
 } from "@cedar2/interface";
+import { User } from "@/users/entities/user.entity";
+import { ReqUser } from "@/users/decorators/user.decorator";
+import { CheckGroupMember } from "@/groups/decorators/check-group-member.decorator";
 
 /**
  * 支払いに関するコントローラ
@@ -30,7 +34,16 @@ export class PaymentsController {
   }
 
   @Get()
-  findAllPayments() {
+  @CheckGroupMember()
+  async findPayments(
+    @ReqUser() user: User,
+    @Query("groupId") groupId?: number,
+  ) {
+    if (groupId !== undefined) {
+      // グループIDの指定がある場合
+      return this.paymentsService.findPaymentsByGroupId(groupId);
+    }
+    // パラメータがない場合は全取得
     return this.paymentsService.findAllPayments();
   }
 

@@ -15,7 +15,6 @@ export class AuthController {
   /**
    * コンストラクタ
    * @param authService
-   * @param usersService
    */
   constructor(private readonly authService: AuthService) {}
 

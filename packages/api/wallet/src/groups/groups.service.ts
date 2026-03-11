@@ -94,6 +94,24 @@ export class GroupsService {
   }
 
   /**
+   * 指定されたIDのグループにユーザが所属するかを判定するメソッド
+   * @param groupId グループID
+   * @param user
+   */
+  isMemberOfGroup(groupId: number, user: User): Promise<boolean> {
+    return this.groupsRepository.exists({
+      where: {
+        id: groupId,
+        members: {
+          member: {
+            id: user.id,
+          },
+        },
+      },
+    });
+  }
+
+  /**
    * 指定されたIDのグループを更新するメソッド
    * @param id ID
    * @param updateGroupDto
