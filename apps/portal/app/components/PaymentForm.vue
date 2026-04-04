@@ -4,14 +4,9 @@ import type {
   CreatePaymentDto,
   GetCategoryDto,
   GetCategoryTreeDto,
+  GetPaymentSummaryDto,
   GetUserSummaryDto,
 } from "@cedar2/interface";
-
-// メモ
-// pertial消す
-// リダイレクト
-// エラー処理
-// 日付
 
 // 定数
 const { API } = useConstant();
@@ -92,11 +87,38 @@ const allocationTotal = computed(() =>
 const actualTotal = computed(() =>
   state.details?.reduce((sum, detail) => sum + detail.actual!, 0),
 );
+const amountErrorMessage = ref<string | null>(null);
+const isButtonActive = ref<boolean>(true);
+
+/**
+ * 金額を各ユーザに等しく割り当てる関数
+ */
+const allocateAmount = () => {
+  const n = state.details!.length;
+  if (n > 0) {
+    state.details!.forEach((d, i) => {
+      d.allocation =
+        Math.floor(state.amount! / n) + (i < state.amount! % n ? 1 : 0);
+    });
+  }
+};
 
 /**
  * 新規作成ボタン押下時の処理
  */
 const onSubmit = async () => {
+  // エラーチェック
+  if (state.amount !== allocationTotal.value) {
+    amountErrorMessage.value =
+      "支払うべき金額の割り当てが合計金額と一致しません。";
+    return;
+  } else if (state.amount !== actualTotal.value) {
+    amountErrorMessage.value =
+      "支払った金額の割り当てが合計金額と一致しません。";
+    return;
+  }
+  amountErrorMessage.value = null;
+
   const { yyyy, mm, dd } = state.paymentDate!;
   const createPaymentDto: CreatePaymentDto = {
     groupId: props.groupId,
@@ -117,24 +139,19 @@ const onSubmit = async () => {
     })),
   };
 
-  const result = await useNuxtApp().$walletFetch<string>(API.WALLET.PAYMENTS, {
-    method: "POST",
-    body: createPaymentDto,
-  });
-
-  console.log(result);
-};
-
-/**
- * 金額を各ユーザに等しく割り当てる関数
- */
-const allocateAmount = () => {
-  const n = state.details!.length;
-  if (n > 0) {
-    state.details!.forEach((d, i) => {
-      d.allocation =
-        Math.floor(state.amount! / n) + (i < state.amount! % n ? 1 : 0);
-    });
+  try {
+    isButtonActive.value = false;
+    const result = await useNuxtApp().$walletFetch<GetPaymentSummaryDto>(
+      API.WALLET.PAYMENTS,
+      {
+        method: "POST",
+        body: createPaymentDto,
+      },
+    );
+    navigateTo(`${result.id}`);
+  } catch {
+    amountErrorMessage.value = "エラーが発生しました。";
+    isButtonActive.value = true;
   }
 };
 </script>
@@ -338,6 +355,14 @@ const allocateAmount = () => {
       <div class="basis-1/3 text-right basis-1/4">{{ actualTotal }} 円</div>
       <UButton icon="i-lucide-wallet" size="md" class="invisible" />
     </div>
+
+    <!-- エラーメッセージ -->
+    <UAlert
+      v-if="amountErrorMessage !== null"
+      :description="amountErrorMessage"
+      color="error"
+      variant="outline"
+    />
 
     <!-- 新規作成ボタン -->
     <UButton type="submit" class="flex justify-self-end" variant="soft">

@@ -1,3 +1,5 @@
+<!-- 支払い / 日付選択 -->
+
 <script setup lang="ts">
 import {
   type DateValue,

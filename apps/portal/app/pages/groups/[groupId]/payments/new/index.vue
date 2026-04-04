@@ -1,3 +1,5 @@
+<!-- 支払い / 新規作成 -->
+
 <script setup lang="ts">
 import { z } from "zod";
 import type { GetGroupDto } from "@cedar2/interface";

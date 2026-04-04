@@ -17,8 +17,6 @@ import type {
   CreateActualDto,
   UpdateActualDto,
 } from "@cedar2/interface";
-import { User } from "@/users/entities/user.entity";
-import { ReqUser } from "@/users/decorators/user.decorator";
 import { CheckGroupMember } from "@/groups/decorators/check-group-member.decorator";
 
 /**
@@ -36,15 +34,27 @@ export class PaymentsController {
   @Get()
   @CheckGroupMember()
   async findPayments(
-    @ReqUser() user: User,
     @Query("groupId") groupId?: number,
+    @Query("yyyy") yearStr?: string,
+    @Query("yyyymm") monthStr?: string,
+    @Query("yyyymmdd") dateStr?: string,
   ) {
-    if (groupId !== undefined) {
-      // グループIDの指定がある場合
+    if (groupId === undefined) {
+      // グループIDがない場合は全取得
+      // TODO: Admin以外たたけないようにする
+      return this.paymentsService.findAllPayments();
+    }
+
+    // グループIDの指定がある場合
+    if (dateStr !== undefined) {
+      return this.paymentsService.findPaymentByPaymentDate(dateStr, groupId);
+    } else if (monthStr !== undefined) {
+      return this.paymentsService.findPaymentByPaymentMonth(monthStr, groupId);
+    } else if (yearStr !== undefined) {
+      return this.paymentsService.findPaymentByPaymentYear(yearStr, groupId);
+    } else {
       return this.paymentsService.findPaymentsByGroupId(groupId);
     }
-    // パラメータがない場合は全取得
-    return this.paymentsService.findAllPayments();
   }
 
   @Get(":paymentId")

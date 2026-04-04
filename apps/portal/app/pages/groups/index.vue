@@ -1,3 +1,5 @@
+<!-- グループ / あなたのグループ -->
+
 <script setup lang="ts">
 import type { GetGroupDto } from "@cedar2/interface";
 

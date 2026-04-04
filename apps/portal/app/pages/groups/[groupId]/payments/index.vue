@@ -1,3 +1,5 @@
+<!-- 支払い / 一覧 -->
+
 <script setup lang="ts">
 import type { GetPaymentSummaryDto } from "@cedar2/interface";
 
