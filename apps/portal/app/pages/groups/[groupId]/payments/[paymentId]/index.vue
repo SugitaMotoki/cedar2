@@ -6,7 +6,6 @@ import type { GetPaymentDetailDto } from "@cedar2/interface";
 const { API } = useConstant();
 const route = useRoute();
 
-// const groupId = route.params["groupId"];
 const paymentId = route.params["paymentId"];
 const url = `${API.WALLET.PAYMENTS}/${paymentId}`;
 const { data: payment, error } = await useFetch<GetPaymentDetailDto>(url, {

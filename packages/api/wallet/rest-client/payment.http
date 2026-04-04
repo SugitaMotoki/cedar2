@@ -17,7 +17,6 @@ Accept: application/json
   "note": "メモ",
   "paymentDate": "2025-12-03",
   "amount": 4000,
-  "isIncome": false,
   "categoryId": 2,
   "createdBy": "1",
   "allocations": [

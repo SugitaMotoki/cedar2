@@ -58,12 +58,6 @@ export class Payment {
   amount: number;
 
   /**
-   * 収入かどうか
-   */
-  @Column()
-  isIncome: boolean;
-
-  /**
    * 精算済みかどうか
    */
   @Column()

@@ -18,11 +18,6 @@ export interface UpdatePresetDto {
   note: string;
 
   /**
-   * 収入かどうか
-   */
-  isIncome: boolean;
-
-  /**
    * カテゴリID
    */
   categoryId: number;

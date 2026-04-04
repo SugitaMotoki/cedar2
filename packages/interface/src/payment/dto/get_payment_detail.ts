@@ -31,11 +31,6 @@ export interface GetPaymentDetailDto {
   amount: number;
 
   /**
-   * 収入かどうか
-   */
-  isIncome: boolean;
-
-  /**
    * 精算済みかどうか
    */
   isSettled: boolean;

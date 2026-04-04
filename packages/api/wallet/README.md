@@ -47,7 +47,6 @@
   - title
   - paymentDate
   - categoryId
-  - isIncome
   - totalAmount
   - isSettled
   - orderKey

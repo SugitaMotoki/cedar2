@@ -31,11 +31,6 @@ export interface CreatePaymentDto {
   amount: number;
 
   /**
-   * 収入かどうか
-   */
-  isIncome: boolean;
-
-  /**
    * カテゴリID
    */
   categoryId: number;

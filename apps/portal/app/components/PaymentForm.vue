@@ -126,7 +126,6 @@ const onSubmit = async () => {
     note: state.note!,
     paymentDate: `${yyyy}-${mm}-${dd}`, // TODO
     amount: state.amount!,
-    isIncome: false,
     categoryId: state.categoryId!,
     createdBy: props.createdBy,
     allocations: state.details!.map((detail) => ({

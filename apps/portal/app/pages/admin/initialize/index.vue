@@ -138,7 +138,6 @@ const onClick = async () => {
       note: "夜ご飯など",
       paymentDate: "2025-12-01",
       amount: 2000,
-      isIncome: false,
       categoryId: 2,
       createdBy: "taro",
       allocations: [
@@ -162,7 +161,6 @@ const onClick = async () => {
       note: "昼ごはんなど",
       paymentDate: "2025-12-02",
       amount: 4000,
-      isIncome: false,
       categoryId: 2,
       createdBy: "taro",
       allocations: [
@@ -186,7 +184,6 @@ const onClick = async () => {
       note: "色々",
       paymentDate: "2025-12-03",
       amount: 3000,
-      isIncome: false,
       categoryId: 2,
       createdBy: "taro",
       allocations: [
