@@ -129,11 +129,20 @@ export class PaymentsService {
       },
       relations: {
         allocations: {
-          user: true,
+          user: {
+            profile: true,
+          },
         },
         actuals: {
-          user: true,
+          user: {
+            profile: true,
+          },
         },
+        category: true,
+        createdBy: {
+          profile: true,
+        },
+        settlements: true,
       },
     });
   }

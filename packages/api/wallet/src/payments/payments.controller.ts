@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   Query,
+  BadRequestException,
 } from "@nestjs/common";
 import { PaymentsService } from "./payments.service";
 import type {
@@ -23,6 +24,7 @@ import { CheckGroupMember } from "@/groups/decorators/check-group-member.decorat
  * 支払いに関するコントローラ
  */
 @Controller("payments")
+@CheckGroupMember()
 export class PaymentsController {
   constructor(private readonly paymentsService: PaymentsService) {}
 
@@ -32,7 +34,6 @@ export class PaymentsController {
   }
 
   @Get()
-  @CheckGroupMember()
   async findPayments(
     @Query("groupId") groupId?: number,
     @Query("yyyy") yearStr?: string,
@@ -58,7 +59,14 @@ export class PaymentsController {
   }
 
   @Get(":paymentId")
-  findPaymentByIdOrThrow(@Param("paymentId") paymentId: string) {
+  findPaymentByIdOrThrow(
+    @Param("paymentId") paymentId: string,
+    @Query("groupId") groupId?: number,
+  ) {
+    // グループIDを指定しない場合エラーとする
+    if (groupId === undefined) {
+      throw new BadRequestException();
+    }
     return this.paymentsService.findPaymentByIdOrThrow(+paymentId);
   }
 
