@@ -86,7 +86,9 @@ export class GroupsService {
       },
       relations: {
         members: {
-          member: true,
+          member: {
+            profile: true,
+          },
         },
         payments: true,
       },

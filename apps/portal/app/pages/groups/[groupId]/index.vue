@@ -33,6 +33,11 @@ if (error.value) {
         :to="`${route.fullPath}/payments/date`"
         class="rounded-none"
       />
+      <UPageCard
+        title="新規作成"
+        :to="`${route.fullPath}/payments/new`"
+        class="rounded-none"
+      />
     </UPageBody>
   </UPage>
 </template>

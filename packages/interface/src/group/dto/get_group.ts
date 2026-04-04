@@ -1,3 +1,6 @@
+import { GetUserSummaryDto } from "../../user";
+import { GetGroupMemberDto } from "./get_group_member";
+
 /**
  * グループ取得用DTO
  */
@@ -15,7 +18,7 @@ export interface GetGroupDto {
   /**
    * 作成者
    */
-  createdBy: string;
+  createdBy: GetUserSummaryDto;
 
   /**
    * 作成日
@@ -26,4 +29,9 @@ export interface GetGroupDto {
    * 更新日
    */
   updatedAt: Date;
+
+  /**
+   * メンバ一覧
+   */
+  members: GetGroupMemberDto[];
 }

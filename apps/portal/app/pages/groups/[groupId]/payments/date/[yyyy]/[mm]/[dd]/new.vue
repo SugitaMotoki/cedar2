@@ -32,12 +32,14 @@ const dd = ref(data.dd);
 
     <UPageBody>
       <UContainer>
-        <PaymentForm
-          :group-id="1"
-          :payment-date="'2026-01-01'"
-          :created-by="'taro'"
-          :users="[]"
-        />
+        <!--
+          <PaymentForm
+            :group-id="1"
+            :payment-date="'2026-01-01'"
+            :created-by="'taro'"
+            :users="[]"
+          />
+        -->
       </UContainer>
     </UPageBody>
   </UPage>
