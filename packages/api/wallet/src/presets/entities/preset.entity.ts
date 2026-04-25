@@ -40,12 +40,6 @@ export class Preset {
   note: string;
 
   /**
-   * 収入かどうか
-   */
-  @Column()
-  isIncome: boolean;
-
-  /**
    * カテゴリ
    */
   @ManyToOne(() => Category)

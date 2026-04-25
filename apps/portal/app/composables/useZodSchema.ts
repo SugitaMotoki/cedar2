@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { CalendarDate } from "@internationalized/date";
 
 /**
  * Zodスキーマを利用するためのコンポーザブル
@@ -46,5 +47,12 @@ export const useZodSchema = () => {
     amount: z
       .number("金額は必須です。")
       .nonnegative("マイナスは入力できません。"),
+
+    /**
+     * 日付
+     */
+    calendarDate: z.instanceof(CalendarDate, {
+      message: "日付を選択してください。",
+    }),
   };
 };

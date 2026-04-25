@@ -4,6 +4,17 @@ const DEFAULT_DTO: GetUserSummaryDto = {
   id: "",
   createdAt: "",
   updatedAt: "",
+  profile: {
+    id: 0,
+    displayName: "",
+    birthday: "",
+    bio: "",
+    avatarUrl: "",
+    timezone: "",
+    language: "",
+    createdAt: "",
+    updatedAt: "",
+  },
 } as const;
 
 /**

@@ -53,6 +53,28 @@ export class GroupsService {
   }
 
   /**
+   * 指定されたユーザが所属するグループを取得するメソッド
+   * @param member
+   */
+  async findByMember(member: User): Promise<Readonly<Group[]>> {
+    return this.groupsRepository.find({
+      where: {
+        members: {
+          member: {
+            id: member.id,
+          },
+        },
+      },
+      relations: {
+        createdBy: true,
+      },
+      order: {
+        createdAt: "ASC",
+      },
+    });
+  }
+
+  /**
    * 指定されたIDのグループを取得するメソッド
    * @param id ID
    * @returns 指定されたIDのグループ（なければエラー）
@@ -64,9 +86,29 @@ export class GroupsService {
       },
       relations: {
         members: {
-          member: true,
+          member: {
+            profile: true,
+          },
         },
         payments: true,
+      },
+    });
+  }
+
+  /**
+   * 指定されたIDのグループにユーザが所属するかを判定するメソッド
+   * @param groupId グループID
+   * @param user
+   */
+  isMemberOfGroup(groupId: number, user: User): Promise<boolean> {
+    return this.groupsRepository.exists({
+      where: {
+        id: groupId,
+        members: {
+          member: {
+            id: user.id,
+          },
+        },
       },
     });
   }

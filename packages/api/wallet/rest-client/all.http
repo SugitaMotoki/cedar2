@@ -107,7 +107,6 @@ Accept: application/json
   "note": "夜ご飯など",
   "paymentDate": "2025-12-01",
   "amount": 2000,
-  "isIncome": false,
   "categoryId": 2,
   "createdBy": "taro",
   "allocations": [
@@ -131,7 +130,6 @@ Accept: application/json
   "note": "昼ごはんなど",
   "paymentDate": "2025-12-02",
   "amount": 4000,
-  "isIncome": false,
   "categoryId": 2,
   "createdBy": "taro",
   "allocations": [
@@ -155,7 +153,6 @@ Accept: application/json
   "note": "色々",
   "paymentDate": "2025-12-03",
   "amount": 3000,
-  "isIncome": false,
   "categoryId": 2,
   "createdBy": "taro",
   "allocations": [
@@ -190,7 +187,6 @@ Accept: application/json
   "groupId": 1,
   "title": "マック",
   "note": "メモ",
-  "isIncome": false,
   "categoryId": 3
 }
 

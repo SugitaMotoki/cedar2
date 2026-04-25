@@ -1,17 +1,20 @@
+<!-- 支払い / [yyyy] / [mm] / [dd] -->
+
 <script setup lang="ts">
 import type { GetPaymentSummaryDto } from "@cedar2/interface";
 import { z } from "zod";
 
-// クエリパラメータ定義
-const schema = useZodSchema();
-const paramSchema = z.object({
-  groupId: schema.groupId,
-  yyyy: schema.yyyy,
-  mm: schema.mm,
-  dd: schema.dd,
-});
+// 定数
+const { API } = useConstant();
 
-// クエリパラメータ検証
+// クエリパラメータ
+const commonSchema = useZodSchema();
+const paramSchema = z.object({
+  groupId: commonSchema.groupId,
+  yyyy: commonSchema.yyyy,
+  mm: commonSchema.mm,
+  dd: commonSchema.dd,
+});
 const { params } = useRoute();
 const { data, success, error } = paramSchema.safeParse(params);
 if (!success) {
@@ -28,11 +31,14 @@ const mm = ref(data.mm);
 const dd = ref(data.dd);
 
 // 支払い一覧を取得
-const { API } = useConstant();
-const { data: payments } = await useFetch<GetPaymentSummaryDto[]>(
-  API.WALLET.PAYMENTS,
-  { baseURL: API.WALLET.BASE_URL },
-);
+const url = `${API.WALLET.PAYMENTS}`;
+const { data: payments } = await useFetch<GetPaymentSummaryDto[]>(url, {
+  $fetch: useNuxtApp().$walletFetch,
+  query: {
+    yyyymmdd: `${yyyy.value}-${mm.value}-${dd.value}`,
+    groupId,
+  },
+});
 </script>
 
 <template>

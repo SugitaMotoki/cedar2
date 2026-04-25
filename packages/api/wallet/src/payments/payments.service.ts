@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import type { CreatePaymentDto, UpdatePaymentDto } from "@cedar2/interface";
-import { InjectRepository } from "@nestjs/typeorm";
+import { InjectDataSource, InjectRepository } from "@nestjs/typeorm";
 import { Payment } from "./entities/payment.entity";
-import { Repository } from "typeorm";
+import { Between, EntityManager, Repository, DataSource } from "typeorm";
 import { Group } from "@/groups/entities/group.entity";
 import { Category } from "@/categories/entities/category.entity";
 import { User } from "@/users/entities/user.entity";
@@ -19,6 +19,7 @@ export class PaymentsService {
    * @param paymentsRepository
    * @param paymentAllocationsRepository
    * @param paymentActualsRepository
+   * @param dataSource
    */
   constructor(
     @InjectRepository(Payment)
@@ -27,6 +28,8 @@ export class PaymentsService {
     private readonly paymentAllocationsRepository: Repository<PaymentAllocation>,
     @InjectRepository(PaymentActual)
     private readonly paymentActualsRepository: Repository<PaymentActual>,
+    @InjectDataSource()
+    private readonly dataSource: DataSource,
   ) {}
 
   /**
@@ -39,36 +42,49 @@ export class PaymentsService {
     note,
     paymentDate,
     amount,
-    isIncome,
     categoryId,
     createdBy,
     allocations,
     actuals,
   }: CreatePaymentDto): Promise<Readonly<Payment>> {
-    const payment = new Payment({
-      group: new Group({ id: groupId }),
-      title,
-      note,
-      paymentDate,
-      amount,
-      isIncome,
-      isSettled: false,
-      orderKey: 0,
-      category: new Category({ id: categoryId }),
-      createdBy: new User({ id: createdBy }),
+    return this.dataSource.transaction(async (manager: EntityManager) => {
+      const payment = new Payment({
+        group: new Group({ id: groupId }),
+        title,
+        note,
+        paymentDate,
+        amount,
+        isSettled: false,
+        orderKey: 0,
+        category: new Category({ id: categoryId }),
+        createdBy: new User({ id: createdBy }),
+      });
+
+      // 支払いを保存
+      const newPayment = manager.save(payment);
+
+      // 支払い割り当て
+      for (const { userId, amount } of allocations) {
+        const allocation = new PaymentAllocation({
+          payment: new Payment({ id: payment.id }),
+          user: new User({ id: userId }),
+          amount,
+        });
+        await manager.save(allocation);
+      }
+
+      // 実際の支払い
+      for (const { userId, amount } of actuals) {
+        const actual = new PaymentActual({
+          payment: new Payment({ id: payment.id }),
+          user: new User({ id: userId }),
+          amount,
+        });
+        await manager.save(actual);
+      }
+
+      return newPayment;
     });
-    await this.paymentsRepository.save(payment);
-
-    // 支払い割り当て
-    for (const { userId, amount } of allocations) {
-      await this.addAllocationToPayment(payment.id, userId, amount);
-    }
-    // 実際の支払い
-    for (const { userId, amount } of actuals) {
-      await this.addActualToPayment(payment.id, userId, amount);
-    }
-
-    return payment;
   }
 
   /**
@@ -77,6 +93,23 @@ export class PaymentsService {
    */
   findAllPayments(): Promise<Readonly<Payment[]>> {
     return this.paymentsRepository.find({
+      order: {
+        orderKey: "ASC",
+        createdAt: "ASC",
+      },
+    });
+  }
+
+  /**
+   * 指定されたグループの支払いを取得するメソッド
+   */
+  findPaymentsByGroupId(groupId: number): Promise<Readonly<Payment[]>> {
+    return this.paymentsRepository.find({
+      where: {
+        group: {
+          id: groupId,
+        },
+      },
       order: {
         orderKey: "ASC",
         createdAt: "ASC",
@@ -96,11 +129,94 @@ export class PaymentsService {
       },
       relations: {
         allocations: {
-          user: true,
+          user: {
+            profile: true,
+          },
         },
         actuals: {
-          user: true,
+          user: {
+            profile: true,
+          },
         },
+        category: true,
+        createdBy: {
+          profile: true,
+        },
+        settlements: true,
+      },
+    });
+  }
+
+  /**
+   * 指定された**日**の支払いを取得するメソッド
+   * @param dateStr 支払い日の文字列 2026-01-01
+   */
+  findPaymentByPaymentDate(
+    dateStr: string,
+    groupId: number,
+  ): Promise<Readonly<Payment[]>> {
+    return this.paymentsRepository.find({
+      where: {
+        paymentDate: dateStr,
+        group: {
+          id: groupId,
+        },
+      },
+      order: {
+        orderKey: "ASC",
+        createdAt: "ASC",
+      },
+    });
+  }
+
+  /**
+   * 指定された**月**の支払いを取得するメソッド
+   * @param monthStr 支払い月の文字列 2026-01
+   */
+  findPaymentByPaymentMonth(
+    monthStr: string,
+    groupId: number,
+  ): Promise<Readonly<Payment[]>> {
+    const [year, month] = monthStr.split("-").map(Number);
+    const lastDay = new Date(year, month, 0).getDate();
+    const startDate = `${monthStr}-01`;
+    const endDate = `${monthStr}-${String(lastDay).padStart(2, "0")}`;
+
+    return this.paymentsRepository.find({
+      where: {
+        paymentDate: Between(startDate, endDate),
+        group: {
+          id: groupId,
+        },
+      },
+      order: {
+        orderKey: "ASC",
+        createdAt: "ASC",
+      },
+    });
+  }
+
+  /**
+   * 指定された**年**の支払いを取得するメソッド
+   * @param yearStr 支払い年の文字列 2026
+   */
+  findPaymentByPaymentYear(
+    yearStr: string,
+    groupId: number,
+  ): Promise<Readonly<Payment[]>> {
+    const startDate = `${yearStr}-01-01`;
+    const endDate = `${yearStr}-12-31`;
+
+    return this.paymentsRepository.find({
+      where: {
+        paymentDate: Between(startDate, endDate),
+        group: {
+          id: groupId,
+        },
+      },
+      order: {
+        orderKey: "ASC",
+        createdAt: "ASC",
       },
     });
   }

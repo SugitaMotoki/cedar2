@@ -28,14 +28,12 @@ export class PresetsService {
     groupId,
     title,
     note,
-    isIncome,
     categoryId,
   }: CreatePresetDto): Promise<Readonly<Preset>> {
     const preset = new Preset({
       group: new Group({ id: groupId }),
       title,
       note,
-      isIncome,
       category: new Category({ id: categoryId }),
       frequency: 0,
     });
@@ -79,13 +77,12 @@ export class PresetsService {
    */
   updatePreset(
     id: number,
-    { groupId, title, note, isIncome, categoryId }: UpdatePresetDto,
+    { groupId, title, note, categoryId }: UpdatePresetDto,
   ) {
     const preset = new Preset({
       group: groupId !== undefined ? new Group({ id: groupId }) : undefined,
       title,
       note,
-      isIncome,
       category:
         categoryId !== undefined ? new Category({ id: categoryId }) : undefined,
     });

@@ -58,9 +58,16 @@ export default defineEventHandler(async (event) => {
       return result;
     }
   } catch (error: unknown) {
-    // 認証エラー以外なら例外を投げて終了
-    if (!(error instanceof FetchError) || error.status !== 401) {
+    if (!(error instanceof FetchError)) {
+      // フェッチエラー以外ならそのままスロー
       throw error;
+    } else if (error.status !== 401) {
+      // 認証エラー以外ならcreateError
+      throw createError({
+        status: error.status,
+        cause: error.cause,
+        statusText: error.message,
+      });
     }
 
     // リトライ

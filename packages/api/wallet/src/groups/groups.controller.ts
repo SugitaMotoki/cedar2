@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Req,
 } from "@nestjs/common";
 import { GroupsService } from "./groups.service";
 import type {
@@ -13,11 +14,15 @@ import type {
   UpdateGroupDto,
   CreateMemberDto,
 } from "@cedar2/interface";
+import type { Request } from "express";
+import { User } from "@/users/entities/user.entity";
+import { CheckGroupMember } from "./decorators/check-group-member.decorator";
 
 /**
  * グループに関するコントローラ
  */
 @Controller("groups")
+@CheckGroupMember()
 export class GroupsController {
   constructor(private readonly groupsService: GroupsService) {}
 
@@ -31,8 +36,14 @@ export class GroupsController {
     return this.groupsService.findAllGroups();
   }
 
+  @Get("own")
+  findOwnGroups(@Req() req: Request) {
+    const user = req.user as User;
+    return this.groupsService.findByMember(user);
+  }
+
   @Get(":groupId")
-  findByIdOrThrow(@Param("groupId") groupId: string) {
+  findById(@Param("groupId") groupId: string) {
     return this.groupsService.findGroupByIdOrThrow(+groupId);
   }
 

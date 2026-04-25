@@ -3,7 +3,7 @@ import { AuthService } from "./auth.service";
 import type { Request } from "express";
 import { LocalAuthGuard } from "./guard/local-auth.guard";
 import { User } from "@/users/entities/user.entity";
-import { IgnoreJwtAuthGuard } from "./ignore-jwt-auth-guard.decorator";
+import { IgnoreJwtAuthGuard } from "./decorators/ignore-jwt-auth-guard.decorator";
 import { JwtRefreshAuthGuard } from "./guard/jwt-refresh-auth.guard";
 import { LoginResponse } from "@cedar2/interface";
 
@@ -15,7 +15,6 @@ export class AuthController {
   /**
    * コンストラクタ
    * @param authService
-   * @param usersService
    */
   constructor(private readonly authService: AuthService) {}
 

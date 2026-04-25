@@ -1,3 +1,6 @@
+import { GetCategoryDto } from "../../category";
+import { GetSettlementSummaryDto } from "../../settlement";
+import { GetUserSummaryDto } from "../../user";
 import { GetPaymentActualDto } from "./get_actual";
 import { GetPaymentAllocationDto } from "./get_allocation";
 
@@ -31,11 +34,6 @@ export interface GetPaymentDetailDto {
   amount: number;
 
   /**
-   * 収入かどうか
-   */
-  isIncome: boolean;
-
-  /**
    * 精算済みかどうか
    */
   isSettled: boolean;
@@ -44,6 +42,16 @@ export interface GetPaymentDetailDto {
    * 表示順
    */
   orderKey: number;
+
+  /**
+   * カテゴリ
+   */
+  category: GetCategoryDto;
+
+  /**
+   * 作成者
+   */
+  createdBy: GetUserSummaryDto;
 
   /**
    * 作成日
@@ -58,10 +66,15 @@ export interface GetPaymentDetailDto {
   /**
    * 支払い割り当て
    */
-  allocation: GetPaymentAllocationDto[];
+  allocations: GetPaymentAllocationDto[];
 
   /**
    * 実際の支払い
    */
   actuals: GetPaymentActualDto[];
+
+  /**
+   * 精算
+   */
+  settlements: GetSettlementSummaryDto[];
 }

@@ -6,6 +6,8 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
+  BadRequestException,
 } from "@nestjs/common";
 import { PaymentsService } from "./payments.service";
 import type {
@@ -16,11 +18,13 @@ import type {
   CreateActualDto,
   UpdateActualDto,
 } from "@cedar2/interface";
+import { CheckGroupMember } from "@/groups/decorators/check-group-member.decorator";
 
 /**
  * 支払いに関するコントローラ
  */
 @Controller("payments")
+@CheckGroupMember()
 export class PaymentsController {
   constructor(private readonly paymentsService: PaymentsService) {}
 
@@ -30,12 +34,39 @@ export class PaymentsController {
   }
 
   @Get()
-  findAllPayments() {
-    return this.paymentsService.findAllPayments();
+  async findPayments(
+    @Query("groupId") groupId?: number,
+    @Query("yyyy") yearStr?: string,
+    @Query("yyyymm") monthStr?: string,
+    @Query("yyyymmdd") dateStr?: string,
+  ) {
+    if (groupId === undefined) {
+      // グループIDがない場合は全取得
+      // TODO: Admin以外たたけないようにする
+      return this.paymentsService.findAllPayments();
+    }
+
+    // グループIDの指定がある場合
+    if (dateStr !== undefined) {
+      return this.paymentsService.findPaymentByPaymentDate(dateStr, groupId);
+    } else if (monthStr !== undefined) {
+      return this.paymentsService.findPaymentByPaymentMonth(monthStr, groupId);
+    } else if (yearStr !== undefined) {
+      return this.paymentsService.findPaymentByPaymentYear(yearStr, groupId);
+    } else {
+      return this.paymentsService.findPaymentsByGroupId(groupId);
+    }
   }
 
   @Get(":paymentId")
-  findPaymentByIdOrThrow(@Param("paymentId") paymentId: string) {
+  findPaymentByIdOrThrow(
+    @Param("paymentId") paymentId: string,
+    @Query("groupId") groupId?: number,
+  ) {
+    // グループIDを指定しない場合エラーとする
+    if (groupId === undefined) {
+      throw new BadRequestException();
+    }
     return this.paymentsService.findPaymentByIdOrThrow(+paymentId);
   }
 
