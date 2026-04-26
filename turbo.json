@@ -11,6 +11,9 @@
     "dev": {
       "dependsOn": ["format"]
     },
-    "build": {},
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**"],
+    },
   }
 }
