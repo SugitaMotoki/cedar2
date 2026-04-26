@@ -18,7 +18,7 @@ import { AuthModule } from "./auth/auth.module";
     ConfigModule.forRoot({
       envFilePath: [
         ".env", // walletの.envファイル（優先）
-        join("..", "..", "..", ".env"), // ルートの.envファイル
+        join("..", "..", ".env"), // ルートの.envファイル
       ],
       isGlobal: true,
     }),
