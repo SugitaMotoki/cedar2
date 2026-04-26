@@ -1,6 +1,5 @@
 packages:
-  - "apps/*"
-  - "packages/**/*"
+  - "packages/*"
 ignoredBuiltDependencies:
   - '@parcel/watcher'
   - '@tailwindcss/oxide'
