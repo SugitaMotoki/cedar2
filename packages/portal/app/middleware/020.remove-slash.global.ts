@@ -9,10 +9,10 @@ export default defineNuxtRouteMiddleware(async (to) => {
 
   // スラッシュで終わっていたら取り除く
   if (to.path.endsWith("/")) {
-    const nextPath = to.path.replace(/\/+$/, '') || '/'
+    const nextPath = to.path.replace(/\/+$/, "") || "/";
     return navigateTo(
       { path: nextPath, query: to.query },
       { redirectCode: 301 },
-    )
+    );
   }
 });
