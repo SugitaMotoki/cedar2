@@ -25,8 +25,7 @@ COPY --from=portal-builder /app/out/json/ .
 COPY --from=portal-builder /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 COPY --from=portal-builder /app/out/full/ .
-RUN pnpm build
-RUN turbo build --filter=@cedar2/portal...
+RUN pnpm portal build
 
 # walletのビルド
 FROM base AS wallet-installer
@@ -35,7 +34,7 @@ COPY --from=wallet-builder /app/out/json/ .
 COPY --from=wallet-builder /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 COPY --from=wallet-builder /app/out/full/ .
-RUN turbo build --filter=@cedar2/wallet...
+RUN pnpm wallet build
 
 FROM base AS portal
 WORKDIR /app

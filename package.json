@@ -6,7 +6,7 @@
   "scripts": {
     "portal": "pnpm -F '@cedar2/portal'",
     "interface": "pnpm -F '@cedar2/interface'",
-    "api:wallet": "pnpm -F '@cedar2/wallet'",
+    "wallet": "pnpm -F '@cedar2/wallet'",
     "type-check": "turbo type-check",
     "lint": "turbo lint",
     "format": "turbo format",
@@ -16,7 +16,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "packageManager": "pnpm@10.33.0",
+  "packageManager": "pnpm@10.33.2",
   "engines": {
     "pnpm": ">=10.25.0",
     "npm": "Use pnpm!",
