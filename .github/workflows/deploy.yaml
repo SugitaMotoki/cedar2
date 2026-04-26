@@ -1,0 +1,44 @@
+name: Deploy to Home Server
+
+on:
+  push:
+    branches: [ "main" ]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME_PORTAL: ${{ github.repository }}-portal
+  IMAGE_NAME_WALLET: ${{ github.repository }}-wallet
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Portal
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          target: portal
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME_PORTAL }}:latest
+
+      - name: Build and push Wallet
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          target: wallet
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME_WALLET }}:latest

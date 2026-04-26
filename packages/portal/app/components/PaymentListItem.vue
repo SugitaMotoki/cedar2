@@ -25,7 +25,9 @@ const formattedAmount = computed(() => {
       <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">
         {{ payment.paymentDate.replaceAll("-", "/") }}
       </span>
-      <span class="text-sm font-semibold text-gray-900 dark:text-white truncate max-w-[200px] sm:max-w-xs">
+      <span
+        class="text-sm font-semibold text-gray-900 dark:text-white truncate max-w-[200px] sm:max-w-xs"
+      >
         {{ payment.title }}
       </span>
     </div>
@@ -50,7 +52,10 @@ const formattedAmount = computed(() => {
           color="primary"
         />
       </div>
-      <UIcon name="i-heroicons-chevron-right-20-solid" class="w-5 h-5 text-gray-400" />
+      <UIcon
+        name="i-heroicons-chevron-right-20-solid"
+        class="w-5 h-5 text-gray-400"
+      />
     </div>
   </ULink>
 </template>
