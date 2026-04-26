@@ -8,11 +8,9 @@
     "format": {
       "dependsOn": ["lint"]
     },
-    "build": {
-      "dependsOn": ["format"]
-    },
     "dev": {
       "dependsOn": ["format"]
-    }
+    },
+    "build": {},
   }
 }

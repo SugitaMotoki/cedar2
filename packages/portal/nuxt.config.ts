@@ -45,4 +45,9 @@ export default defineNuxtConfig({
       },
     },
   },
+
+  sourcemap: {
+    client: false,
+    server: false,
+  }
 });
